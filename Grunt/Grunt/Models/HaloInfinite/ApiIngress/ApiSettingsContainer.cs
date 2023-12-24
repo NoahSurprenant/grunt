@@ -9,6 +9,7 @@ using System.Collections.Generic;
 
 namespace OpenSpartan.Grunt.Models.HaloInfinite.ApiIngress
 {
+    [IsAutomaticallySerializable]
     public class ApiSettingsContainer
     {
         public Dictionary<string, ApiAuthority> Authorities { get; set; }
