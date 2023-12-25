@@ -1,0 +1,6 @@
+@Grunt.ApiTest_HostAddress = http://localhost:5195
+
+GET {{Grunt.ApiTest_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

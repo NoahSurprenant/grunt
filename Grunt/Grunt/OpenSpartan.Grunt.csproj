@@ -1,22 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<CustomPathToTransforms>$(MSBuildExtensionsPath)</CustomPathToTransforms>
-		<IsGitHubActions>false</IsGitHubActions>
-	</PropertyGroup>
-	
-	<Import Project="$(CustomPathToTransforms)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TextTemplating\Microsoft.TextTemplating.targets" Condition="$(IsGitHubActions) == 'false'" />
-	
-	<PropertyGroup>
-		<In>$([System.IO.File]::ReadAllText('$(MSBuildProjectDirectory)\VersioningTemplate.cs'))</In>
-		<Pattern>\[assembly: AssemblyInformationalVersion\("(?&lt;Major&gt;\d+)\.(?&lt;Minor&gt;\d+)\.(?&lt;Patch&gt;[\d]+).(?&lt;PreReleaseInfo&gt;[0-9A-Za-z-.]+)?</Pattern>
-		<AssemblyVersionMajor>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern), System.Text.RegularExpressions.RegexOptions.Multiline).Groups["Major"].Value)</AssemblyVersionMajor>
-		<AssemblyVersionMinor>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern), System.Text.RegularExpressions.RegexOptions.Multiline).Groups["Minor"].Value)</AssemblyVersionMinor>
-		<AssemblyVersionPatch>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern), System.Text.RegularExpressions.RegexOptions.Multiline).Groups["Patch"].Value)</AssemblyVersionPatch>
-		<AssemblyVersionPreRelease>$([System.Text.RegularExpressions.Regex]::Match($(In), $(Pattern), System.Text.RegularExpressions.RegexOptions.Multiline).Groups["PreReleaseInfo"].Value)</AssemblyVersionPreRelease>
-	</PropertyGroup>
-	
-	<PropertyGroup>
-		<TargetFramework>net6.0</TargetFramework>
+		<TargetFramework>net8.0</TargetFramework>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<PackageProjectUrl>https://gruntapi.com</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/openspartan/grunt</RepositoryUrl>
@@ -24,29 +8,18 @@
 		<PackageTags>halo,halo-api,api,halo-infinite,halo-mcc,halo-5,halo-wars,halo-4</PackageTags>
 		<PackageIcon>grunt-logo.png</PackageIcon>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-		<Version>$(AssemblyVersionMajor).$(AssemblyVersionMinor).$(AssemblyVersionPatch).$(AssemblyVersionPreRelease)</Version>
-		<TransformOnBuild>true</TransformOnBuild>
-		<TransformOutOfDateOnly>false</TransformOutOfDateOnly>
+		<Version>1.0.0.0</Version>
 		<Nullable>enable</Nullable>
 		<AnalysisLevel>latest</AnalysisLevel>
 		<PackageId>$(AssemblyName)</PackageId>
-		<Authors>Den Delimarsky</Authors>
-		<Company>Den Delimarsky</Company>
+		<Authors>Den Delimarsky, Noah Surprenant</Authors>
 		<Product>$(AssemblyName)</Product>
 		<Description>An unofficial wrapper for the Halo APIs. Currently supports the full API stack for Halo Infinite.</Description>
-		<Copyright>2022 by Den Delimarsky</Copyright>
+		<Copyright>Copyright for portions of Grunt are held by Den Delimarsky, 2022. All other copyright for Grunt are held by Noah Surprenant, 2023.</Copyright>
 		<PackageReleaseNotes>Initial release of the OpenSpartan.Grunt package.</PackageReleaseNotes>
 		<AssemblyName>$(MSBuildProjectName)</AssemblyName>
 		<RootNamespace>$(MSBuildProjectName.Replace(" ", "_"))</RootNamespace>
 	</PropertyGroup>
-	
-	<ItemGroup>
-	  <None Remove="stylecop.json" />
-	</ItemGroup>
-	
-	<ItemGroup>
-	  <AdditionalFiles Include="stylecop.json" />
-	</ItemGroup>
 
 	<ItemGroup>
 		<None Include="..\..\media\grunt-logo.png">
@@ -57,36 +30,9 @@
 			<Pack>True</Pack>
 			<PackagePath>\</PackagePath>
 		</None>
-		<None Include="VersioningTemplate.cs">
-			<DesignTime>True</DesignTime>
-			<AutoGen>True</AutoGen>
-			<DependentUpon>VersioningTemplate.tt</DependentUpon>
-		</None>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.435">
-	    <PrivateAssets>all</PrivateAssets>
-	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-	  </PackageReference>
-	</ItemGroup>
-
-	<ItemGroup>
-		<None Update="VersioningTemplate.tt">
-			<Generator>TextTemplatingFileGenerator</Generator>
-			<LastGenOutput>VersioningTemplate.cs</LastGenOutput>
-		</None>
 	</ItemGroup>
 
 	<ItemGroup>
 		<Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
-	</ItemGroup>
-
-	<ItemGroup>
-		<Compile Update="VersioningTemplate.cs">
-			<DesignTime>True</DesignTime>
-			<AutoGen>True</AutoGen>
-			<DependentUpon>VersioningTemplate.tt</DependentUpon>
-		</Compile>
 	</ItemGroup>
 </Project>
