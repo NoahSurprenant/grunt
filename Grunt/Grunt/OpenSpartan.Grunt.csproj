@@ -72,9 +72,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<None Update="endpoints.json">
-			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
-		</None>
 		<None Update="VersioningTemplate.tt">
 			<Generator>TextTemplatingFileGenerator</Generator>
 			<LastGenOutput>VersioningTemplate.cs</LastGenOutput>
