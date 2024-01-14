@@ -98,7 +98,7 @@ namespace OpenSpartan.Grunt.Authentication
             var response = await client.PostAsync(XboxEndpoints.XboxLiveToken, new FormUrlEncodedContent(tokenRequestContent));
 
             return response.IsSuccessStatusCode
-                ? JsonSerializer.Deserialize<OAuthToken>(response.Content.ReadAsStringAsync().Result)
+                ? JsonSerializer.Deserialize<OAuthToken>(await response.Content.ReadAsStringAsync())
                 : null;
         }
 
@@ -138,7 +138,7 @@ namespace OpenSpartan.Grunt.Authentication
             var response = await client.PostAsync(XboxEndpoints.XboxLiveToken, new FormUrlEncodedContent(tokenRequestContent));
 
             return response.IsSuccessStatusCode
-                ? JsonSerializer.Deserialize<OAuthToken>(response.Content.ReadAsStringAsync().Result)
+                ? JsonSerializer.Deserialize<OAuthToken>(await response.Content.ReadAsStringAsync())
                 : null;
         }
 
