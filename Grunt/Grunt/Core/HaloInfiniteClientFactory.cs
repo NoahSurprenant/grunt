@@ -5,6 +5,7 @@ using OpenSpartan.Grunt.Authentication;
 using OpenSpartan.Grunt.Models;
 using OpenSpartan.Grunt.Util;
 using System;
+using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -19,13 +20,18 @@ public class HaloInfiniteClientFactory
     private readonly ILoggerFactory _loggerFactory;
     private readonly ILogger<HaloInfiniteClientFactory> _logger;
     private readonly IConfiguration _configuration;
+    private readonly IHttpClientFactory _httpClientFactory;
+    private readonly IAccountAuthorization _accountAuthorization;
 
-    public HaloInfiniteClientFactory(IOptionsMonitor<ClientConfiguration> optionsMonitor, ILoggerFactory loggerFactory, IConfiguration config)
+    public HaloInfiniteClientFactory(IOptionsMonitor<ClientConfiguration> optionsMonitor, ILoggerFactory loggerFactory, IConfiguration config,
+        IHttpClientFactory httpClientFactory, IAccountAuthorization accountAuthorization)
     {
         _options = optionsMonitor;
         _loggerFactory = loggerFactory;
         _logger = loggerFactory.CreateLogger<HaloInfiniteClientFactory>();
         _configuration = config;
+        _httpClientFactory = httpClientFactory;
+        _accountAuthorization = accountAuthorization;
     }
 
     public async Task<HaloInfiniteClient> CreateAsync()
@@ -37,7 +43,6 @@ public class HaloInfiniteClientFactory
         if (string.IsNullOrEmpty(clientConfig.RedirectUrl)) throw new Exception("RedirectUrl is null or empty");
 
         XboxAuthenticationClient manager = new();
-        var url = manager.GenerateAuthUrl(clientConfig.ClientId, clientConfig.RedirectUrl);
 
         HaloAuthenticationClient haloAuthClient = new();
 
@@ -56,7 +61,7 @@ public class HaloInfiniteClientFactory
         else
         {
             _logger.LogDebug("Requesting new OAuth token");
-            currentOAuthToken = await RequestNewToken(url, manager, clientConfig);
+            currentOAuthToken = await RequestNewToken(manager, clientConfig);
         }
 
         ticket = await manager.RequestUserToken(currentOAuthToken.AccessToken);
@@ -71,8 +76,8 @@ public class HaloInfiniteClientFactory
 
             if (currentOAuthToken == null)
             {
-                Console.WriteLine("Could not get the token even with the refresh token.");
-                currentOAuthToken = await RequestNewToken(url, manager, clientConfig);
+                _logger.LogInformation("Could not get the token even with the refresh token.");
+                currentOAuthToken = await RequestNewToken(manager, clientConfig);
             }
             ticket = await manager.RequestUserToken(currentOAuthToken.AccessToken);
         }
@@ -85,19 +90,12 @@ public class HaloInfiniteClientFactory
 
         _logger.LogDebug("Your Halo token: {HaloToken}", haloToken.Token);
 
-        return new HaloInfiniteClient(haloToken.Token, extendedTicket.DisplayClaims.Xui[0].Xid);
+        return new HaloInfiniteClient(_httpClientFactory.CreateClient(nameof(HaloInfiniteClient)), haloToken.Token, extendedTicket.DisplayClaims.Xui[0].Xid);
     }
 
-    private async Task<OAuthToken> RequestNewToken(string url, XboxAuthenticationClient manager, ClientConfiguration clientConfig)
+    private async Task<OAuthToken> RequestNewToken(XboxAuthenticationClient manager, ClientConfiguration clientConfig)
     {
-        var code = _configuration.GetValue<string>("AccountAuthorization");
-
-        if (code is null)
-        {
-            // TODO: use callback url instead
-            _logger.LogError("Missing AccountAuthorization in configuration. Provide account authorization and grab the code from the URL: {URL}", url);
-            throw new Exception("Missing AccountAuthorization");
-        }
+        var code = await _accountAuthorization.GetCodeAsync();
 
         // If no local token file exists, request a new set of tokens.
         var currentOAuthToken = await manager.RequestOAuthToken(clientConfig.ClientId, code, clientConfig.RedirectUrl, clientConfig.ClientSecret);

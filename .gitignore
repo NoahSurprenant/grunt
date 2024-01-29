@@ -359,3 +359,6 @@ grunt.json
 
 ## Contains token information
 tokens.json
+
+## Contains one time use authorization code
+AccountAuthorization.txt
