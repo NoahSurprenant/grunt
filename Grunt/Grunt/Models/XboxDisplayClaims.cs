@@ -7,11 +7,10 @@
 
 using System.Text.Json.Serialization;
 
-namespace OpenSpartan.Grunt.Models
+namespace Surprenant.Grunt.Models;
+
+public class XboxDisplayClaims
 {
-    public class XboxDisplayClaims
-    {
-        [JsonPropertyName("xui")]
-        public XboxXui[] Xui { get; set; }
-    }
+    [JsonPropertyName("xui")]
+    public XboxXui[] Xui { get; set; }
 }

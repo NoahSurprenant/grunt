@@ -7,13 +7,12 @@
 
 using System.Collections.Generic;
 
-namespace OpenSpartan.Grunt.Models.HaloInfinite
+namespace Surprenant.Grunt.Models.HaloInfinite;
+
+[IsAutomaticallySerializable]
+public class AsyncComputeOverrides
 {
-    [IsAutomaticallySerializable]
-    public class AsyncComputeOverrides
-    {
-        public Dictionary<string, bool> Nvidia { get; set; }
-        public Dictionary<string, bool> AMD { get; set; }
-        public Dictionary<string, bool> Intel { get; set; }
-    }
+    public Dictionary<string, bool> Nvidia { get; set; }
+    public Dictionary<string, bool> AMD { get; set; }
+    public Dictionary<string, bool> Intel { get; set; }
 }

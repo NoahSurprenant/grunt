@@ -6,13 +6,12 @@
 // </copyright>
 
 using System.Collections.Generic;
-using OpenSpartan.Grunt.Models.HaloInfinite.Foundation;
+using Surprenant.Grunt.Models.HaloInfinite.Foundation;
 
-namespace OpenSpartan.Grunt.Models.HaloInfinite
+namespace Surprenant.Grunt.Models.HaloInfinite;
+
+[IsAutomaticallySerializable]
+public class AuthoringAssetContainer : AuthoringResultContainer
 {
-    [IsAutomaticallySerializable]
-    public class AuthoringAssetContainer : AuthoringResultContainer
-    {
-        public List<AuthoringAsset> Results { get; set; }
-    }
+    public List<AuthoringAsset> Results { get; set; }
 }

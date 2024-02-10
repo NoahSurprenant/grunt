@@ -5,18 +5,18 @@
 // The underlying API powering Grunt is managed by 343 Industries and Microsoft. This wrapper is not endorsed by 343 Industries or Microsoft.
 // </copyright>
 
+using Surprenant.Grunt.Models.HaloInfinite.Foundation;
 using System.Collections.Generic;
 
-namespace OpenSpartan.Grunt.Models.HaloInfinite
+namespace Surprenant.Grunt.Models.HaloInfinite;
+
+[IsAutomaticallySerializable]
+public class VehicleCoreTheme : Theme
 {
-    [IsAutomaticallySerializable]
-    public class VehicleCoreTheme : Foundation.Theme
-    {
-        public string CoatingPath { get; set; }
-        public string HornPath { get; set; }
-        public string VehicleFxPath { get; set; }
-        public string VehicleCharmPath { get; set; }
-        public List<Emblem> Emblems { get; set; }
-        public string AlternateGeometryRegionPath { get; set; }
-    }
+    public string CoatingPath { get; set; }
+    public string HornPath { get; set; }
+    public string VehicleFxPath { get; set; }
+    public string VehicleCharmPath { get; set; }
+    public List<Emblem> Emblems { get; set; }
+    public string AlternateGeometryRegionPath { get; set; }
 }

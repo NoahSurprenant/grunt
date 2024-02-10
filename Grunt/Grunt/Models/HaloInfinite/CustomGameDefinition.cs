@@ -5,19 +5,18 @@
 // The underlying API powering Grunt is managed by 343 Industries and Microsoft. This wrapper is not endorsed by 343 Industries or Microsoft.
 // </copyright>
 
-namespace OpenSpartan.Grunt.Models.HaloInfinite
+namespace Surprenant.Grunt.Models.HaloInfinite;
+
+[IsAutomaticallySerializable]
+public class CustomGameDefinition
 {
-    [IsAutomaticallySerializable]
-    public class CustomGameDefinition
-    {
-        public int MaxPlayerCount { get; set; }
-        public int MaxPlayersPerClient { get; set; }
-        public string RulesId { get; set; }
-        public int DefaultMaxFireteamSizeSliderValue { get; set; }
-        public int MaxTeamCount { get; set; }
-        public int MaxPlayersInMediumVmInstance { get; set; }
-        public bool DefaultObserversAllowed { get; set; }
-        public GameVariant DefaultMap { get; set; }
-        public GameVariant DefaultGameVariant { get; set; }
-    }
+    public int MaxPlayerCount { get; set; }
+    public int MaxPlayersPerClient { get; set; }
+    public string RulesId { get; set; }
+    public int DefaultMaxFireteamSizeSliderValue { get; set; }
+    public int MaxTeamCount { get; set; }
+    public int MaxPlayersInMediumVmInstance { get; set; }
+    public bool DefaultObserversAllowed { get; set; }
+    public GameVariant DefaultMap { get; set; }
+    public GameVariant DefaultGameVariant { get; set; }
 }

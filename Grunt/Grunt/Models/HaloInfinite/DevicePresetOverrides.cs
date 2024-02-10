@@ -5,14 +5,13 @@
 // The underlying API powering Grunt is managed by 343 Industries and Microsoft. This wrapper is not endorsed by 343 Industries or Microsoft.
 // </copyright>
 
-namespace OpenSpartan.Grunt.Models.HaloInfinite
+namespace Surprenant.Grunt.Models.HaloInfinite;
+
+[IsAutomaticallySerializable]
+public class DevicePresetOverrides
 {
-    [IsAutomaticallySerializable]
-    public class DevicePresetOverrides
-    {
-        public int Version { get; set; }
-        public NvidiaPreset Nvidia { get; set; }
-        public AMDPreset AMD { get; set; }
-        public IntelPreset Intel { get; set; }
-    }
+    public int Version { get; set; }
+    public NvidiaPreset Nvidia { get; set; }
+    public AMDPreset AMD { get; set; }
+    public IntelPreset Intel { get; set; }
 }

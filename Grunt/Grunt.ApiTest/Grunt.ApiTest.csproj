@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Grunt\OpenSpartan.Grunt.csproj" />
+    <ProjectReference Include="..\Grunt\Surprenant.Grunt.csproj" />
   </ItemGroup>
 
 </Project>

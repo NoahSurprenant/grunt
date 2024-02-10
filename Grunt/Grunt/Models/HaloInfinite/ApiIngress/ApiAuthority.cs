@@ -5,14 +5,13 @@
 // The underlying API powering Grunt is managed by 343 Industries and Microsoft. This wrapper is not endorsed by 343 Industries or Microsoft.
 // </copyright>
 
-namespace OpenSpartan.Grunt.Models.HaloInfinite.ApiIngress
+namespace Surprenant.Grunt.Models.HaloInfinite.ApiIngress;
+
+public class ApiAuthority
 {
-    public class ApiAuthority
-    {
-        public string AuthorityId { get; set; }
-        public int Scheme { get; set; }
-        public string Hostname { get; set; }
-        public int? Port { get; set; }
-        public int[] AuthenticationMethods { get; set; }
-    }
+    public string AuthorityId { get; set; }
+    public int Scheme { get; set; }
+    public string Hostname { get; set; }
+    public int? Port { get; set; }
+    public int[] AuthenticationMethods { get; set; }
 }

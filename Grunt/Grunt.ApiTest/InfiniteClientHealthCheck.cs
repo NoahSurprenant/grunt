@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Diagnostics.HealthChecks;
-using OpenSpartan.Grunt.Core;
+using Surprenant.Grunt.Core;
 
 namespace Grunt.ApiTest;
 

@@ -5,11 +5,10 @@
 // The underlying API powering Grunt is managed by 343 Industries and Microsoft. This wrapper is not endorsed by 343 Industries or Microsoft.
 // </copyright>
 
-namespace OpenSpartan.Grunt.Models
+namespace Surprenant.Grunt.Models;
+
+public class SpartanTokenProof
 {
-    public class SpartanTokenProof
-    {
-        public string Token { get; set; }
-        public string TokenType { get; set; }
-    }
+    public string Token { get; set; }
+    public string TokenType { get; set; }
 }

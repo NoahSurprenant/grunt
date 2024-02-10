@@ -7,11 +7,10 @@
 
 using System.Collections.Generic;
 
-namespace OpenSpartan.Grunt.Models.HaloInfinite
+namespace Surprenant.Grunt.Models.HaloInfinite;
+
+[IsAutomaticallySerializable]
+public class LobbyPresenceContainer
 {
-    [IsAutomaticallySerializable]
-    public class LobbyPresenceContainer
-    {
-        public List<LobbyPresenceResultContainer> Results { get; set; }
-    }
+    public List<LobbyPresenceResultContainer> Results { get; set; }
 }

@@ -5,16 +5,15 @@
 // The underlying API powering Grunt is managed by 343 Industries and Microsoft. This wrapper is not endorsed by 343 Industries or Microsoft.
 // </copyright>
 
-namespace OpenSpartan.Grunt.Models.HaloInfinite
+namespace Surprenant.Grunt.Models.HaloInfinite;
+
+[IsAutomaticallySerializable]
+public class CurrencyDefinition
 {
-    [IsAutomaticallySerializable]
-    public class CurrencyDefinition
-    {
-        public string Id { get; set; }
-        public int InitialBalanceAmount { get; set; }
-        public StoreProduct[] MSStoreProducts { get; set; }
-        public StoreProduct[] SteamStoreProducts { get; set; }
-        public MicrosoftStoreInventory MicrosoftStore { get; set; }
-        public SteamStoreInventory SteamInventory { get; set; }
-    }
+    public string Id { get; set; }
+    public int InitialBalanceAmount { get; set; }
+    public StoreProduct[] MSStoreProducts { get; set; }
+    public StoreProduct[] SteamStoreProducts { get; set; }
+    public MicrosoftStoreInventory MicrosoftStore { get; set; }
+    public SteamStoreInventory SteamInventory { get; set; }
 }

@@ -5,14 +5,13 @@
 // The underlying API powering Grunt is managed by 343 Industries and Microsoft. This wrapper is not endorsed by 343 Industries or Microsoft.
 // </copyright>
 
-namespace OpenSpartan.Grunt.Models.HaloInfinite
+namespace Surprenant.Grunt.Models.HaloInfinite;
+
+/// <summary>
+/// Determines how results in an API call that returns multiple entities are ordered.
+/// </summary>
+public enum ResultOrder
 {
-    /// <summary>
-    /// Determines how results in an API call that returns multiple entities are ordered.
-    /// </summary>
-    public enum ResultOrder
-    {
-        Desc,
-        Asc
-    }
+    Desc,
+    Asc
 }

@@ -7,13 +7,12 @@
 
 using System;
 
-namespace OpenSpartan.Grunt.Models
+namespace Surprenant.Grunt.Models;
+
+public class XboxTicket
 {
-    public class XboxTicket
-    {
-        public DateTime IssueInstant { get; set; }
-        public DateTime NotAfter { get; set; }
-        public string Token { get; set; }
-        public XboxDisplayClaims DisplayClaims { get; set; }
-    }
+    public DateTime IssueInstant { get; set; }
+    public DateTime NotAfter { get; set; }
+    public string Token { get; set; }
+    public XboxDisplayClaims DisplayClaims { get; set; }
 }

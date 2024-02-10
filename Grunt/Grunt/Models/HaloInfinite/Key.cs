@@ -7,23 +7,21 @@
 
 using System.Text.Json.Serialization;
 
-namespace OpenSpartan.Grunt.Models.HaloInfinite
-{
-    // For more details, refer to: https://datatracker.ietf.org/doc/html/rfc7518
-    // Additional context: https://stackoverflow.com/questions/70022898/what-does-e-aqab-mean-in-jwks
-    public class Key
-    {
-        [JsonPropertyName("kty")]
-        public string KeyType { get; set; }
-        public string Use { get; set; }
-        [JsonPropertyName("kid")]
-        public string KeyId { get; set; }
-        [JsonPropertyName("n")]
-        public string Modulus { get; set; }
-        [JsonPropertyName("e")]
-        public string Exponent { get; set; }
-        [JsonPropertyName("x5c")]
-        public string[] X509CertificateChain { get; set; }
-    }
+namespace Surprenant.Grunt.Models.HaloInfinite;
 
+// For more details, refer to: https://datatracker.ietf.org/doc/html/rfc7518
+// Additional context: https://stackoverflow.com/questions/70022898/what-does-e-aqab-mean-in-jwks
+public class Key
+{
+    [JsonPropertyName("kty")]
+    public string KeyType { get; set; }
+    public string Use { get; set; }
+    [JsonPropertyName("kid")]
+    public string KeyId { get; set; }
+    [JsonPropertyName("n")]
+    public string Modulus { get; set; }
+    [JsonPropertyName("e")]
+    public string Exponent { get; set; }
+    [JsonPropertyName("x5c")]
+    public string[] X509CertificateChain { get; set; }
 }

@@ -5,11 +5,10 @@
 // The underlying API powering Grunt is managed by 343 Industries and Microsoft. This wrapper is not endorsed by 343 Industries or Microsoft.
 // </copyright>
 
-namespace OpenSpartan.Grunt.Models.HaloInfinite
+namespace Surprenant.Grunt.Models.HaloInfinite;
+
+[IsAutomaticallySerializable]
+public class TagInfo
 {
-    [IsAutomaticallySerializable]
-    public class TagInfo
-    {
-        public AssetTag[] CannedTags { get; set; }
-    }
+    public AssetTag[] CannedTags { get; set; }
 }

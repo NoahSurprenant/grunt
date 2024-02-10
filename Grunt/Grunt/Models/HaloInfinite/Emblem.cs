@@ -5,12 +5,11 @@
 // The underlying API powering Grunt is managed by 343 Industries and Microsoft. This wrapper is not endorsed by 343 Industries or Microsoft.
 // </copyright>
 
-namespace OpenSpartan.Grunt.Models.HaloInfinite
+namespace Surprenant.Grunt.Models.HaloInfinite;
+
+[IsAutomaticallySerializable]
+public class Emblem
 {
-    [IsAutomaticallySerializable]
-    public class Emblem
-    {
-        public string EmblemPath { get; set; }
-        public int ConfigurationId { get; set; }
-    }
+    public string EmblemPath { get; set; }
+    public int ConfigurationId { get; set; }
 }

@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using OpenSpartan.Grunt.Core;
-using OpenSpartan.Grunt.Models.HaloInfinite;
-using OpenSpartan.Grunt.Util;
+using Surprenant.Grunt.Core;
+using Surprenant.Grunt.Models.HaloInfinite;
+using Surprenant.Grunt.Util;
 
 namespace Grunt.ApiTest.Controllers;
 [ApiController]

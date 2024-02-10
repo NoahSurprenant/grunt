@@ -5,13 +5,12 @@
 // The underlying API powering Grunt is managed by 343 Industries and Microsoft. This wrapper is not endorsed by 343 Industries or Microsoft.
 // </copyright>
 
-namespace OpenSpartan.Grunt.Models.HaloInfinite
+namespace Surprenant.Grunt.Models.HaloInfinite;
+
+[IsAutomaticallySerializable]
+public class PlaylistCsrContainer
 {
-    [IsAutomaticallySerializable]
-    public class PlaylistCsrContainer
-    {
-        public PlaylistCsr Current { get; set; }
-        public PlaylistCsr SeasonMax { get; set; }
-        public PlaylistCsr AllTimeMax { get; set; }
-    }
+    public PlaylistCsr Current { get; set; }
+    public PlaylistCsr SeasonMax { get; set; }
+    public PlaylistCsr AllTimeMax { get; set; }
 }

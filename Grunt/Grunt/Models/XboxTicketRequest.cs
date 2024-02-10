@@ -5,12 +5,11 @@
 // The underlying API powering Grunt is managed by 343 Industries and Microsoft. This wrapper is not endorsed by 343 Industries or Microsoft.
 // </copyright>
 
-namespace OpenSpartan.Grunt.Models
+namespace Surprenant.Grunt.Models;
+
+public class XboxTicketRequest
 {
-    public class XboxTicketRequest
-    {
-        public string RelyingParty { get; set; }
-        public string TokenType { get; set; }
-        public XboxTicketProperties Properties { get; set; }
-    }
+    public string RelyingParty { get; set; }
+    public string TokenType { get; set; }
+    public XboxTicketProperties Properties { get; set; }
 }

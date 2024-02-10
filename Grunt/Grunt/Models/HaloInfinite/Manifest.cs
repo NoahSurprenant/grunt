@@ -5,18 +5,17 @@
 // The underlying API powering Grunt is managed by 343 Industries and Microsoft. This wrapper is not endorsed by 343 Industries or Microsoft.
 // </copyright>
 
-using OpenSpartan.Grunt.Models.HaloInfinite.Foundation;
+using Surprenant.Grunt.Models.HaloInfinite.Foundation;
 
-namespace OpenSpartan.Grunt.Models.HaloInfinite
+namespace Surprenant.Grunt.Models.HaloInfinite;
+
+[IsAutomaticallySerializable]
+public class Manifest : Asset
 {
-    [IsAutomaticallySerializable]
-    public class Manifest : Asset
-    {
-        public ManifestCustomData CustomData { get; set; }
-        public Map[] MapLinks { get; set; }
-        public UGCGameVariant[] UgcGameVariantLinks { get; set; }
-        public object[] PlaylistLinks { get; set; }
-        public EngineGameVariant[] EngineGameVariantLinks { get; set; }
-        public PlayAssetStats AssetStats { get; set; }
-    }
+    public ManifestCustomData CustomData { get; set; }
+    public Map[] MapLinks { get; set; }
+    public UGCGameVariant[] UgcGameVariantLinks { get; set; }
+    public object[] PlaylistLinks { get; set; }
+    public EngineGameVariant[] EngineGameVariantLinks { get; set; }
+    public PlayAssetStats AssetStats { get; set; }
 }

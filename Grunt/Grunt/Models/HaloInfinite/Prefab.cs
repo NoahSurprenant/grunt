@@ -5,14 +5,13 @@
 // The underlying API powering Grunt is managed by 343 Industries and Microsoft. This wrapper is not endorsed by 343 Industries or Microsoft.
 // </copyright>
 
-using OpenSpartan.Grunt.Models.HaloInfinite.Foundation;
+using Surprenant.Grunt.Models.HaloInfinite.Foundation;
 
-namespace OpenSpartan.Grunt.Models.HaloInfinite
+namespace Surprenant.Grunt.Models.HaloInfinite;
+
+[IsAutomaticallySerializable]
+public class Prefab : Asset
 {
-    [IsAutomaticallySerializable]
-    public class Prefab : Asset
-    {
-        public PrefabCustomData CustomData { get; set; }
-        public PlayAssetStats AssetStats { get; set; }
-    }
+    public PrefabCustomData CustomData { get; set; }
+    public PlayAssetStats AssetStats { get; set; }
 }

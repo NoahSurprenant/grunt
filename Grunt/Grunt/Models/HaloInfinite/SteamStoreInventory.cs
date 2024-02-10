@@ -5,11 +5,10 @@
 // The underlying API powering Grunt is managed by 343 Industries and Microsoft. This wrapper is not endorsed by 343 Industries or Microsoft.
 // </copyright>
 
-namespace OpenSpartan.Grunt.Models.HaloInfinite
+namespace Surprenant.Grunt.Models.HaloInfinite;
+
+[IsAutomaticallySerializable]
+public class SteamStoreInventory
 {
-    [IsAutomaticallySerializable]
-    public class SteamStoreInventory
-    {
-        public SteamStoreTitleConfiguration TitleConfiguration { get; set; }
-    }
+    public SteamStoreTitleConfiguration TitleConfiguration { get; set; }
 }

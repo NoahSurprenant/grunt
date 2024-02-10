@@ -7,11 +7,10 @@
 
 using System.Collections.Generic;
 
-namespace OpenSpartan.Grunt.Models.HaloInfinite
+namespace Surprenant.Grunt.Models.HaloInfinite;
+
+[IsAutomaticallySerializable]
+public class AiCoreCollection
 {
-    [IsAutomaticallySerializable]
-    public class AiCoreCollection
-    {
-        public List<AiCore> AiCores { get; set; }
-    }
+    public List<AiCore> AiCores { get; set; }
 }

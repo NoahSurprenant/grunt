@@ -7,11 +7,10 @@
 
 using System.Collections.Generic;
 
-namespace OpenSpartan.Grunt.Models.HaloInfinite
+namespace Surprenant.Grunt.Models.HaloInfinite;
+
+[IsAutomaticallySerializable]
+public class VehicleCore : Foundation.Core
 {
-    [IsAutomaticallySerializable]
-    public class VehicleCore : Foundation.Core
-    {
-        public List<VehicleCoreTheme> Themes { get; set; }
-    }
+    public List<VehicleCoreTheme> Themes { get; set; }
 }

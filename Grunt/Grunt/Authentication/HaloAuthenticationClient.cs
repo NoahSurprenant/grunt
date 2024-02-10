@@ -10,54 +10,53 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using OpenSpartan.Grunt.Endpoints;
-using OpenSpartan.Grunt.Models;
-using OpenSpartan.Grunt.Util;
+using Surprenant.Grunt.Endpoints;
+using Surprenant.Grunt.Models;
+using Surprenant.Grunt.Util;
 
-namespace OpenSpartan.Grunt.Authentication
+namespace Surprenant.Grunt.Authentication;
+
+/// <summary>
+/// Halo authentication client, used to provide the key authentication
+/// data to perform Halo API requests.
+/// </summary>
+public class HaloAuthenticationClient
 {
     /// <summary>
-    /// Halo authentication client, used to provide the key authentication
-    /// data to perform Halo API requests.
+    /// Gets the Spartan V4 token.
     /// </summary>
-    public class HaloAuthenticationClient
+    /// <param name="xstsToken">XSTS token from the Xbox Live authentication flow.</param>
+    /// <returns>If successful, returns an instance of <see cref="SpartanToken"/> representing the authentication token. Otherwise, returns null.</returns>
+    public async Task<SpartanToken?> GetSpartanToken(string xstsToken)
     {
-        /// <summary>
-        /// Gets the Spartan V4 token.
-        /// </summary>
-        /// <param name="xstsToken">XSTS token from the Xbox Live authentication flow.</param>
-        /// <returns>If successful, returns an instance of <see cref="SpartanToken"/> representing the authentication token. Otherwise, returns null.</returns>
-        public async Task<SpartanToken?> GetSpartanToken(string xstsToken)
+        SpartanTokenRequest tokenRequest = new();
+        tokenRequest.Audience = "urn:343:s3:services";
+        tokenRequest.MinVersion = "4";
+        tokenRequest.Proof = new SpartanTokenProof[]
         {
-            SpartanTokenRequest tokenRequest = new();
-            tokenRequest.Audience = "urn:343:s3:services";
-            tokenRequest.MinVersion = "4";
-            tokenRequest.Proof = new SpartanTokenProof[]
+            new SpartanTokenProof()
             {
-                new SpartanTokenProof()
-                {
-                    Token = xstsToken,
-                    TokenType = "Xbox_XSTSv3",
-                },
-            };
+                Token = xstsToken,
+                TokenType = "Xbox_XSTSv3",
+            },
+        };
 
-            var client = new HttpClient();
-            var data = JsonSerializer.Serialize(tokenRequest);
+        var client = new HttpClient();
+        var data = JsonSerializer.Serialize(tokenRequest);
 
-            var request = new HttpRequestMessage()
-            {
-                RequestUri = new Uri(HaloCoreEndpoints.SpartanTokenEndpoint),
-                Method = HttpMethod.Post,
-                Content = new StringContent(data, Encoding.UTF8, "application/json"),
-            };
+        var request = new HttpRequestMessage()
+        {
+            RequestUri = new Uri(HaloCoreEndpoints.SpartanTokenEndpoint),
+            Method = HttpMethod.Post,
+            Content = new StringContent(data, Encoding.UTF8, "application/json"),
+        };
 
-            request.Headers.Add("User-Agent", GlobalConstants.HALO_WAYPOINT_USER_AGENT);
+        request.Headers.Add("User-Agent", GlobalConstants.HALO_WAYPOINT_USER_AGENT);
 
-            var response = await client.SendAsync(request);
+        var response = await client.SendAsync(request);
 
-            return response.IsSuccessStatusCode
-                ? JsonSerializer.Deserialize<SpartanToken>(response.Content.ReadAsStringAsync().Result)
-                : null;
-        }
+        return response.IsSuccessStatusCode
+            ? JsonSerializer.Deserialize<SpartanToken>(response.Content.ReadAsStringAsync().Result)
+            : null;
     }
 }

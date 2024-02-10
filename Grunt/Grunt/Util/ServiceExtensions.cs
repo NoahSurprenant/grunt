@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using OpenSpartan.Grunt.Core;
-using OpenSpartan.Grunt.Models;
+using Surprenant.Grunt.Core;
+using Surprenant.Grunt.Models;
 using System.Net;
 using System.Net.Http;
 
-namespace OpenSpartan.Grunt.Util;
+namespace Surprenant.Grunt.Util;
 public static class ServiceExtensions
 {
     public static void RegisterHaloInfiniteClientFactory(this WebApplicationBuilder builder)

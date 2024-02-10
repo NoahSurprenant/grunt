@@ -7,10 +7,9 @@
 
 using System;
 
-namespace OpenSpartan.Grunt.Models
+namespace Surprenant.Grunt.Models;
+
+public class ContentTypeAttribute : Attribute
 {
-    public class ContentTypeAttribute : Attribute
-    {
-        public string HeaderValue { get; set; }
-    }
+    public string HeaderValue { get; set; }
 }

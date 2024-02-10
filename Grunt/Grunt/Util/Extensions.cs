@@ -7,34 +7,33 @@
 
 using System;
 using System.Reflection;
-using OpenSpartan.Grunt.Models;
+using Surprenant.Grunt.Models;
 
-namespace OpenSpartan.Grunt.Util
+namespace Surprenant.Grunt.Util;
+
+internal static class Extensions
 {
-    internal static class Extensions
+    public static string? GetHeaderValue(this ApiContentType value)
     {
-        public static string? GetHeaderValue(this ApiContentType value)
+        Type type = value.GetType();
+        FieldInfo? fieldInfo = type.GetField(name: value.ToString());
+
+        if (fieldInfo != null)
         {
-            Type type = value.GetType();
-            FieldInfo? fieldInfo = type.GetField(name: value.ToString());
+            ContentTypeAttribute[]? attributes = fieldInfo.GetCustomAttributes(typeof(ContentTypeAttribute), false) as ContentTypeAttribute[];
 
-            if (fieldInfo != null)
+            if (attributes != null)
             {
-                ContentTypeAttribute[]? attributes = fieldInfo.GetCustomAttributes(typeof(ContentTypeAttribute), false) as ContentTypeAttribute[];
-
-                if (attributes != null)
-                {
-                    return attributes.Length > 0 ? attributes[0].HeaderValue : null;
-                }
-                else
-                {
-                    return null;
-                }
+                return attributes.Length > 0 ? attributes[0].HeaderValue : null;
             }
             else
             {
                 return null;
             }
+        }
+        else
+        {
+            return null;
         }
     }
 }

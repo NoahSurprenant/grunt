@@ -7,11 +7,10 @@
 
 using System.Collections.Generic;
 
-namespace OpenSpartan.Grunt.Models.HaloInfinite
+namespace Surprenant.Grunt.Models.HaloInfinite;
+
+[IsAutomaticallySerializable]
+public class ActiveBoostsContainer
 {
-    [IsAutomaticallySerializable]
-    public class ActiveBoostsContainer
-    {
-        public List<ActiveBoost> Boosts { get; set; }
-    }
+    public List<ActiveBoost> Boosts { get; set; }
 }

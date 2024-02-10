@@ -7,11 +7,10 @@
 
 using System.Collections.Generic;
 
-namespace OpenSpartan.Grunt.Models.HaloInfinite
+namespace Surprenant.Grunt.Models.HaloInfinite;
+
+[IsAutomaticallySerializable]
+public class PlaylistCsrResultContainer
 {
-    [IsAutomaticallySerializable]
-    public class PlaylistCsrResultContainer
-    {
-        public List<PlaylistCsrResults> Value { get; set; }
-    }
+    public List<PlaylistCsrResults> Value { get; set; }
 }

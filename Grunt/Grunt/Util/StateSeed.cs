@@ -2,18 +2,18 @@
 using System;
 using System.Threading;
 
-namespace OpenSpartan.Grunt.Util;
+namespace Surprenant.Grunt.Util;
 
 public interface IStateSeed
 {
-    Guid State {  get; }
+    Guid State { get; }
 }
 
 internal class StateSeed : IStateSeed
 {
     private readonly ILogger<StateSeed> _logger;
     private readonly Timer _timer;
-    public Guid State {  get; private set; }
+    public Guid State { get; private set; }
 
     public StateSeed(ILogger<StateSeed> logger)
     {

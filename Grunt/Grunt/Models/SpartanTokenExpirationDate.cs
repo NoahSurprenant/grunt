@@ -7,10 +7,8 @@
 
 using System;
 
-namespace OpenSpartan.Grunt.Models
+namespace Surprenant.Grunt.Models;
+public class APIFormattedDate
 {
-    public class APIFormattedDate
-    {
-        public DateTime? ISO8601Date { get; set; }
-    }
+    public DateTime? ISO8601Date { get; set; }
 }

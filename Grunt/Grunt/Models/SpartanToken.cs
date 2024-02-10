@@ -7,14 +7,12 @@
 
 using System.Text.Json.Serialization;
 
-namespace OpenSpartan.Grunt.Models
-{
+namespace Surprenant.Grunt.Models;
 
-    public class SpartanToken
-    {
-        [JsonPropertyName("SpartanToken")]
-        public string Token { get; set; }
-        public APIFormattedDate ExpiresUtc { get; set; }
-        public string TokenDuration { get; set; }
-    }
+public class SpartanToken
+{
+    [JsonPropertyName("SpartanToken")]
+    public string Token { get; set; }
+    public APIFormattedDate ExpiresUtc { get; set; }
+    public string TokenDuration { get; set; }
 }

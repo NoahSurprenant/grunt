@@ -7,17 +7,16 @@
 
 using System.Collections.Generic;
 
-namespace OpenSpartan.Grunt.Models.HaloInfinite
+namespace Surprenant.Grunt.Models.HaloInfinite;
+
+/// <summary>
+/// AI Core available in Halo Infinite.
+/// </summary>
+[IsAutomaticallySerializable]
+public class AiCore : Foundation.Core
 {
     /// <summary>
-    /// AI Core available in Halo Infinite.
+    /// Gets or sets a list of themes associated with an AI Core.
     /// </summary>
-    [IsAutomaticallySerializable]
-    public class AiCore : Foundation.Core
-    {
-        /// <summary>
-        /// Gets or sets a list of themes associated with an AI Core.
-        /// </summary>
-        public List<AiCoreTheme>? Themes { get; set; }
-    }
+    public List<AiCoreTheme>? Themes { get; set; }
 }

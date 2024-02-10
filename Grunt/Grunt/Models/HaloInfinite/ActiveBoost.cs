@@ -5,15 +5,14 @@
 // The underlying API powering Grunt is managed by 343 Industries and Microsoft. This wrapper is not endorsed by 343 Industries or Microsoft.
 // </copyright>
 
-namespace OpenSpartan.Grunt.Models.HaloInfinite
+namespace Surprenant.Grunt.Models.HaloInfinite;
+
+[IsAutomaticallySerializable]
+public class ActiveBoost
 {
-    [IsAutomaticallySerializable]
-    public class ActiveBoost
-    {
-        public APIFormattedDate ExpirationDate { get; set; }
-        public string State { get; set; }
-        public string BoostPath { get; set; }
-        public float EffectiveMultiplier { get; set; }
-        public int Matches { get; set; }
-    }
+    public APIFormattedDate ExpirationDate { get; set; }
+    public string State { get; set; }
+    public string BoostPath { get; set; }
+    public float EffectiveMultiplier { get; set; }
+    public int Matches { get; set; }
 }

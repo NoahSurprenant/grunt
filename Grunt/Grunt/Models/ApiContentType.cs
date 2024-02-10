@@ -5,23 +5,22 @@
 // The underlying API powering Grunt is managed by 343 Industries and Microsoft. This wrapper is not endorsed by 343 Industries or Microsoft.
 // </copyright>
 
-namespace OpenSpartan.Grunt.Models
+namespace Surprenant.Grunt.Models;
+
+/// <summary>
+/// Type of content to return for the Halo API.
+/// </summary>
+public enum ApiContentType
 {
     /// <summary>
-    /// Type of content to return for the Halo API.
+    /// JSON data format.
     /// </summary>
-    public enum ApiContentType
-    {
-        /// <summary>
-        /// JSON data format.
-        /// </summary>
-        [ContentType(HeaderValue = "application/json")]
-        Json,
+    [ContentType(HeaderValue = "application/json")]
+    Json,
 
-        /// <summary>
-        /// <see href="https://microsoft.github.io/bond/manual/bond_cs.html#compact-binary">Microsoft Bond Compact Binary</see> data format.
-        /// </summary>
-        [ContentType(HeaderValue = "application/x-bond-compact-binary")]
-        BondCompactBinary,
-    }
+    /// <summary>
+    /// <see href="https://microsoft.github.io/bond/manual/bond_cs.html#compact-binary">Microsoft Bond Compact Binary</see> data format.
+    /// </summary>
+    [ContentType(HeaderValue = "application/x-bond-compact-binary")]
+    BondCompactBinary,
 }

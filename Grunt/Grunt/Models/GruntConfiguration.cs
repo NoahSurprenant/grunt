@@ -7,11 +7,10 @@
 
 using System.Text.Json.Serialization;
 
-namespace OpenSpartan.Grunt.Models
+namespace Surprenant.Grunt.Models;
+
+public class GruntConfiguration
 {
-    public class GruntConfiguration
-    {
-        [JsonPropertyName("clearance_token")]
-        public string ClearanceToken { get; set; }
-    }
+    [JsonPropertyName("clearance_token")]
+    public string ClearanceToken { get; set; }
 }

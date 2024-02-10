@@ -7,12 +7,11 @@
 
 using System;
 
-namespace OpenSpartan.Grunt.Models
+namespace Surprenant.Grunt.Models;
+
+/// <summary>
+/// Determines whether an object can be automatically serialized by a Halo API client.
+/// </summary>
+public class IsAutomaticallySerializableAttribute : Attribute
 {
-    /// <summary>
-    /// Determines whether an object can be automatically serialized by a Halo API client.
-    /// </summary>
-    public class IsAutomaticallySerializableAttribute : Attribute
-    {
-    }
 }

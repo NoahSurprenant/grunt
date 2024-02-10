@@ -5,18 +5,16 @@
 // The underlying API powering Grunt is managed by 343 Industries and Microsoft. This wrapper is not endorsed by 343 Industries or Microsoft.
 // </copyright>
 
-namespace OpenSpartan.Grunt.Models.HaloInfinite
-{
-    [IsAutomaticallySerializable]
-    public class FireTeamDetails
-    {
-        public string FireteamId { get; set; }
-        public int PlayerCount { get; set; }
-        public int MaxPlayers { get; set; }
-        public int JoinabilityStatus { get; set; }
-        public object PlaylistRef { get; set; }
-        public int Activity { get; set; }
-        public int FireteamLeaderMenuActivity { get; set; }
-    }
+namespace Surprenant.Grunt.Models.HaloInfinite;
 
+[IsAutomaticallySerializable]
+public class FireTeamDetails
+{
+    public string FireteamId { get; set; }
+    public int PlayerCount { get; set; }
+    public int MaxPlayers { get; set; }
+    public int JoinabilityStatus { get; set; }
+    public object PlaylistRef { get; set; }
+    public int Activity { get; set; }
+    public int FireteamLeaderMenuActivity { get; set; }
 }

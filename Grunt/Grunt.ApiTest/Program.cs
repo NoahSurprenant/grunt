@@ -1,6 +1,6 @@
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using OpenSpartan.Grunt.Util;
+using Surprenant.Grunt.Util;
 
 namespace Grunt.ApiTest;
 

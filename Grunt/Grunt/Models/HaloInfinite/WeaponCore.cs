@@ -7,11 +7,10 @@
 
 using System.Collections.Generic;
 
-namespace OpenSpartan.Grunt.Models.HaloInfinite
+namespace Surprenant.Grunt.Models.HaloInfinite;
+
+[IsAutomaticallySerializable]
+public class WeaponCore : Foundation.Core
 {
-    [IsAutomaticallySerializable]
-    public class WeaponCore : Foundation.Core
-    {
-        public List<WeaponCoreTheme> Themes { get; set; }
-    }
+    public List<WeaponCoreTheme> Themes { get; set; }
 }

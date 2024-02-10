@@ -1,6 +1,6 @@
-﻿using OpenSpartan.Grunt.Core;
-using OpenSpartan.Grunt.Librarian.Models;
-using OpenSpartan.Grunt.Models.HaloInfinite.ApiIngress;
+﻿using OpenSpartan.Grunt.Librarian.Models;
+using Surprenant.Grunt.Core;
+using Surprenant.Grunt.Models.HaloInfinite.ApiIngress;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,7 +8,6 @@ using System.Linq;
 using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;

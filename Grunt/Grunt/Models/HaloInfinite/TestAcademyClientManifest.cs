@@ -5,18 +5,11 @@
 // The underlying API powering Grunt is managed by 343 Industries and Microsoft. This wrapper is not endorsed by 343 Industries or Microsoft.
 // </copyright>
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+namespace Surprenant.Grunt.Models.HaloInfinite;
 
-namespace OpenSpartan.Grunt.Models.HaloInfinite
+[IsAutomaticallySerializable]
+public class TestAcademyClientManifest
 {
-    [IsAutomaticallySerializable]
-    public class TestAcademyClientManifest
-    {
-        public TestAcademyTutorial Tutorial { get; set; }
-        public TestDrillCategory[] Categories { get; set; }
-    }
+    public TestAcademyTutorial Tutorial { get; set; }
+    public TestDrillCategory[] Categories { get; set; }
 }

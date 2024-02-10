@@ -5,15 +5,14 @@
 // The underlying API powering Grunt is managed by 343 Industries and Microsoft. This wrapper is not endorsed by 343 Industries or Microsoft.
 // </copyright>
 
-namespace OpenSpartan.Grunt.Models.HaloInfinite.Foundation
+namespace Surprenant.Grunt.Models.HaloInfinite.Foundation;
+
+public abstract class AuthoringResultContainer
 {
-    public abstract class AuthoringResultContainer
-    {
-        public int EstimatedTotal { get; set; }
-        public int Start { get; set; }
-        public int Count { get; set; }
-        public int ResultCount { get; set; }
-        //TODO: Figure out what the object here is.
-        public object Links { get; set; }
-    }
+    public int EstimatedTotal { get; set; }
+    public int Start { get; set; }
+    public int Count { get; set; }
+    public int ResultCount { get; set; }
+    //TODO: Figure out what the object here is.
+    public object Links { get; set; }
 }

@@ -5,14 +5,13 @@
 // The underlying API powering Grunt is managed by 343 Industries and Microsoft. This wrapper is not endorsed by 343 Industries or Microsoft.
 // </copyright>
 
-namespace OpenSpartan.Grunt.Models.HaloInfinite
+namespace Surprenant.Grunt.Models.HaloInfinite;
+
+[IsAutomaticallySerializable]
+public class Team
 {
-    [IsAutomaticallySerializable]
-    public class Team
-    {
-        public int TeamId { get; set; }
-        public int Outcome { get; set; }
-        public int Rank { get; set; }
-        public Stats Stats { get; set; }
-    }
+    public int TeamId { get; set; }
+    public int Outcome { get; set; }
+    public int Rank { get; set; }
+    public Stats Stats { get; set; }
 }

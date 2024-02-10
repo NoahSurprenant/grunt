@@ -5,15 +5,14 @@
 // The underlying API powering Grunt is managed by 343 Industries and Microsoft. This wrapper is not endorsed by 343 Industries or Microsoft.
 // </copyright>
 
-namespace OpenSpartan.Grunt.Models.HaloInfinite
+namespace Surprenant.Grunt.Models.HaloInfinite;
+
+[IsAutomaticallySerializable]
+public class InGameItem
 {
-    [IsAutomaticallySerializable]
-    public class InGameItem
-    {
-        public int TagId { get; set; }
-        public IdentifierName ThemeName { get; set; }
-        public IdentifierName EmblemShaderName { get; set; }
-        public CommonItemData CommonData { get; set; }
-        public Configuration[] AvailableConfigurations { get; set; }
-    }
+    public int TagId { get; set; }
+    public IdentifierName ThemeName { get; set; }
+    public IdentifierName EmblemShaderName { get; set; }
+    public CommonItemData CommonData { get; set; }
+    public Configuration[] AvailableConfigurations { get; set; }
 }

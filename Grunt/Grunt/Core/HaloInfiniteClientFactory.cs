@@ -1,15 +1,15 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using OpenSpartan.Grunt.Authentication;
-using OpenSpartan.Grunt.Models;
-using OpenSpartan.Grunt.Util;
+using Surprenant.Grunt.Authentication;
+using Surprenant.Grunt.Models;
+using Surprenant.Grunt.Util;
 using System;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace OpenSpartan.Grunt.Core;
+namespace Surprenant.Grunt.Core;
 
 /// <summary>
 /// A factory intended to be registered as a singleton.

@@ -5,22 +5,20 @@
 // The underlying API powering Grunt is managed by 343 Industries and Microsoft. This wrapper is not endorsed by 343 Industries or Microsoft.
 // </copyright>
 
-using System;
 using System.Collections.Generic;
 
-namespace OpenSpartan.Grunt.Models.HaloInfinite
-{
-    [IsAutomaticallySerializable]
-    public class SkillResult
-    {
-        public double TeamMmr { get; set; }
-        public RankRecap RankRecap { get; set; }
-        public StatPerformances StatPerformances { get; set; }
-        public int TeamId { get; set; }
-        public Dictionary<string, double> TeamMmrs { get; set; }
-        //TODO: Investigate that RankedRewards is actually a string. My hunch is that this will be an array.
-        public string RankedRewards { get; set; }
-        public Counterfactuals Counterfactuals { get; set; }
+namespace Surprenant.Grunt.Models.HaloInfinite;
 
-    }
+[IsAutomaticallySerializable]
+public class SkillResult
+{
+    public double TeamMmr { get; set; }
+    public RankRecap RankRecap { get; set; }
+    public StatPerformances StatPerformances { get; set; }
+    public int TeamId { get; set; }
+    public Dictionary<string, double> TeamMmrs { get; set; }
+    //TODO: Investigate that RankedRewards is actually a string. My hunch is that this will be an array.
+    public string RankedRewards { get; set; }
+    public Counterfactuals Counterfactuals { get; set; }
+
 }

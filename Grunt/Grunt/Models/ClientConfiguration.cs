@@ -7,17 +7,16 @@
 
 using System.Text.Json.Serialization;
 
-namespace OpenSpartan.Grunt.Models
+namespace Surprenant.Grunt.Models;
+
+public class ClientConfiguration
 {
-    public class ClientConfiguration
-    {
-        [JsonPropertyName("client_id")]
-        public string ClientId { get; set; }
+    [JsonPropertyName("client_id")]
+    public string ClientId { get; set; }
 
-        [JsonPropertyName("client_secret")]
-        public string ClientSecret { get; set; }
+    [JsonPropertyName("client_secret")]
+    public string ClientSecret { get; set; }
 
-        [JsonPropertyName("redirect_url")]
-        public string RedirectUrl { get; set; }
-    }
+    [JsonPropertyName("redirect_url")]
+    public string RedirectUrl { get; set; }
 }

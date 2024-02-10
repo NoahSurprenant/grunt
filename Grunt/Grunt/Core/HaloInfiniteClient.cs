@@ -12,14 +12,14 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
-using OpenSpartan.Grunt.Converters;
-using OpenSpartan.Grunt.Endpoints;
-using OpenSpartan.Grunt.Models;
-using OpenSpartan.Grunt.Models.HaloInfinite;
-using OpenSpartan.Grunt.Models.HaloInfinite.ApiIngress;
-using OpenSpartan.Grunt.Util;
+using Surprenant.Grunt.Converters;
+using Surprenant.Grunt.Endpoints;
+using Surprenant.Grunt.Models;
+using Surprenant.Grunt.Models.HaloInfinite;
+using Surprenant.Grunt.Models.HaloInfinite.ApiIngress;
+using Surprenant.Grunt.Util;
 
-namespace OpenSpartan.Grunt.Core;
+namespace Surprenant.Grunt.Core;
 
 /// <summary>
 /// Client used to access the Halo Infinite API surface.
@@ -44,9 +44,9 @@ public class HaloInfiniteClient
     /// <param name="clearanceToken">ID of the flight/clearance currently active for the player. Optional when first instantiating the client.</param>
     public HaloInfiniteClient(HttpClient httpClient, string spartanToken, string xuid = "", string clearanceToken = "")
     {
-        this.SpartanToken = spartanToken;
-        this.Xuid = xuid;
-        this.ClearanceToken = clearanceToken;
+        SpartanToken = spartanToken;
+        Xuid = xuid;
+        ClearanceToken = clearanceToken;
         _httpClient = httpClient;
     }
 
@@ -75,7 +75,7 @@ public class HaloInfiniteClient
     /// <returns>An instance of ApiSettingsContainer if the call is successful. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<ApiSettingsContainer, HaloApiErrorContainer>> GetApiSettingsContainer()
     {
-        return await this.ExecuteAPIRequest<ApiSettingsContainer>(
+        return await ExecuteAPIRequest<ApiSettingsContainer>(
             HaloCoreEndpoints.HaloInfiniteEndpointsEndpoint,
             HttpMethod.Get,
             false,
@@ -95,7 +95,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of BotCustomizationData that contains bot customization information. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<BotCustomizationData, HaloApiErrorContainer>> AcademyGetBotCustomization(string flightId)
     {
-        return await this.ExecuteAPIRequest<BotCustomizationData>(
+        return await ExecuteAPIRequest<BotCustomizationData>(
             $"https://{HaloCoreEndpoints.GameCmsOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/multiplayer/file/Academy/BotCustomizationData.json?flight={flightId}",
             HttpMethod.Get,
             true,
@@ -110,7 +110,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of AcademyClientManifest that contains the definition of drills available in the Academy. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<AcademyClientManifest, HaloApiErrorContainer>> AcademyGetContent()
     {
-        return await this.ExecuteAPIRequest<AcademyClientManifest>(
+        return await ExecuteAPIRequest<AcademyClientManifest>(
             $"https://{HaloCoreEndpoints.GameCmsOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/multiplayer/file/Academy/AcademyClientManifest.json",
             HttpMethod.Get,
             true,
@@ -126,7 +126,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of TestAcademyClientManifest that contains the definition of drills available in the Academy. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<TestAcademyClientManifest, HaloApiErrorContainer>> AcademyGetContentTest(string clearanceId)
     {
-        return await this.ExecuteAPIRequest<TestAcademyClientManifest>(
+        return await ExecuteAPIRequest<TestAcademyClientManifest>(
             $"https://{HaloCoreEndpoints.GameCmsOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/multiplayer/file/Academy/AcademyClientManifest_Test.json?flight={clearanceId}",
             HttpMethod.Get,
             true,
@@ -141,7 +141,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of AcademyStarDefinitions that contains definitions for stars awarded in the Academy. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<AcademyStarDefinitions, HaloApiErrorContainer>> AcademyGetStarDefinitions()
     {
-        return await this.ExecuteAPIRequest<AcademyStarDefinitions>(
+        return await ExecuteAPIRequest<AcademyStarDefinitions>(
             $"https://{HaloCoreEndpoints.GameCmsOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/multiplayer/file/Academy/AcademyStarGUIDDefinitions.json",
             HttpMethod.Get,
             true,
@@ -162,7 +162,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of Core containing AI core customization metadata if request was successful. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<AiCore, HaloApiErrorContainer>> EconomyAiCoreCustomization(string player, string coreId)
     {
-        return await this.ExecuteAPIRequest<AiCore>(
+        return await ExecuteAPIRequest<AiCore>(
             $"https://{HaloCoreEndpoints.EconomyOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/players/{player}/customization/ais/{coreId}",
             HttpMethod.Get,
             true,
@@ -178,7 +178,7 @@ public class HaloInfiniteClient
     /// <returns>An instance of AiCores containing AI core customization metadata if request was successful. Return value is null otherwise.</returns>
     public async Task<HaloApiResultContainer<AiCoreContainer, HaloApiErrorContainer>> EconomyAiCoresCustomization(string player)
     {
-        return await this.ExecuteAPIRequest<AiCoreContainer>(
+        return await ExecuteAPIRequest<AiCoreContainer>(
             $"https://{HaloCoreEndpoints.EconomyOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/players/{player}/customization/ais",
             HttpMethod.Get,
             true,
@@ -194,7 +194,7 @@ public class HaloInfiniteClient
     /// <returns>An instance of PlayerCores containing player core customization metadata if request was successful. Return value is null otherwise.</returns>
     public async Task<HaloApiResultContainer<PlayerCores, HaloApiErrorContainer>> EconomyAllOwnedCoresDetails(string player)
     {
-        return await this.ExecuteAPIRequest<PlayerCores>(
+        return await ExecuteAPIRequest<PlayerCores>(
             $"https://{HaloCoreEndpoints.EconomyOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/players/{player}/cores",
             HttpMethod.Get,
             true,
@@ -211,7 +211,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of ArmorCore containing customization information. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<ArmorCore, HaloApiErrorContainer>> EconomyArmorCoreCustomization(string player, string coreId)
     {
-        return await this.ExecuteAPIRequest<ArmorCore>(
+        return await ExecuteAPIRequest<ArmorCore>(
             $"https://{HaloCoreEndpoints.EconomyOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/players/{player}/customization/armors/{coreId}",
             HttpMethod.Get,
             true,
@@ -227,7 +227,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of ArmorCoreCollection that contains the list of armor cores. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<ArmorCoreCollection, HaloApiErrorContainer>> EconomyArmorCoresCustomization(string player)
     {
-        return await this.ExecuteAPIRequest<ArmorCoreCollection>(
+        return await ExecuteAPIRequest<ArmorCoreCollection>(
             $"https://{HaloCoreEndpoints.EconomyOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/players/{player}/customization/armors",
             HttpMethod.Get,
             true,
@@ -243,7 +243,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of ActiveBoostsContainer that contains the list of active boosts. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<ActiveBoostsContainer, HaloApiErrorContainer>> EconomyGetActiveBoosts(string player)
     {
-        return await this.ExecuteAPIRequest<ActiveBoostsContainer>(
+        return await ExecuteAPIRequest<ActiveBoostsContainer>(
             $"https://{HaloCoreEndpoints.EconomyOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/players/{player}/boosts",
             HttpMethod.Get,
             true,
@@ -260,7 +260,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of RewardSnapshot that contains the list of awarded rewards. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<RewardSnapshot, HaloApiErrorContainer>> EconomyGetAwardedRewards(string player, string rewardId)
     {
-        return await this.ExecuteAPIRequest<RewardSnapshot>(
+        return await ExecuteAPIRequest<RewardSnapshot>(
             $"https://{HaloCoreEndpoints.EconomyOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/players/{player}/rewards/{rewardId}",
             HttpMethod.Get,
             true,
@@ -276,7 +276,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of StoreItem containing boost information. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<StoreItem, HaloApiErrorContainer>> EconomyGetBoostsStore(string player)
     {
-        return await this.ExecuteAPIRequest<StoreItem>(
+        return await ExecuteAPIRequest<StoreItem>(
             $"https://{HaloCoreEndpoints.EconomyOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/players/{player}/stores/boosts",
             HttpMethod.Get,
             true,
@@ -292,7 +292,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of PlayerGiveaways containing available giveaways. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<PlayerGiveaways, HaloApiErrorContainer>> EconomyGetGiveawayRewards(string player)
     {
-        return await this.ExecuteAPIRequest<PlayerGiveaways>(
+        return await ExecuteAPIRequest<PlayerGiveaways>(
             $"https://{HaloCoreEndpoints.EconomyOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/players/{player}/giveaways",
             HttpMethod.Get,
             true,
@@ -308,7 +308,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, an instance of StoreItem containing store offerings. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<StoreItem, HaloApiErrorContainer>> EconomyGetHCSStore(string player)
     {
-        return await this.ExecuteAPIRequest<StoreItem>(
+        return await ExecuteAPIRequest<StoreItem>(
             $"https://{HaloCoreEndpoints.EconomyOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/players/{player}/stores/hcs",
             HttpMethod.Get,
             true,
@@ -324,7 +324,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of PlayerInventory that contains a list of items in the player's inventory. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<PlayerInventory, HaloApiErrorContainer>> EconomyGetInventoryItems(string player)
     {
-        return await this.ExecuteAPIRequest<PlayerInventory>(
+        return await ExecuteAPIRequest<PlayerInventory>(
             $"https://{HaloCoreEndpoints.EconomyOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/players/{player}/inventory",
             HttpMethod.Get,
             true,
@@ -340,7 +340,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of StoreItem that contains information about items available in the main store. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<StoreItem, HaloApiErrorContainer>> EconomyGetMainStore(string player)
     {
-        return await this.ExecuteAPIRequest<StoreItem>(
+        return await ExecuteAPIRequest<StoreItem>(
             $"https://{HaloCoreEndpoints.EconomyOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/players/{player}/stores/main",
             HttpMethod.Get,
             true,
@@ -357,7 +357,7 @@ public class HaloInfiniteClient
     public async Task<HaloApiResultContainer<PlayerCustomizationCollection, HaloApiErrorContainer>> EconomyGetMultiplePlayersCustomization(List<string> playerIds)
     {
         var formattedPlayerList = string.Join(",", playerIds);
-        return await this.ExecuteAPIRequest<PlayerCustomizationCollection>(
+        return await ExecuteAPIRequest<PlayerCustomizationCollection>(
             $"https://{HaloCoreEndpoints.EconomyOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/customization?players={formattedPlayerList}",
             HttpMethod.Get,
             true,
@@ -373,7 +373,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of StoreItem that contains information about items available in the operations reward levels store. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<StoreItem, HaloApiErrorContainer>> EconomyGetOperationRewardLevelsStore(string player)
     {
-        return await this.ExecuteAPIRequest<StoreItem>(
+        return await ExecuteAPIRequest<StoreItem>(
             $"https://{HaloCoreEndpoints.EconomyOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/players/{player}/stores/operationrewardlevels",
             HttpMethod.Get,
             true,
@@ -389,7 +389,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of StoreItem that contains information about items available in the operations store. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<StoreItem, HaloApiErrorContainer>> EconomyGetOperationsStore(string player)
     {
-        return await this.ExecuteAPIRequest<StoreItem>(
+        return await ExecuteAPIRequest<StoreItem>(
             $"https://{HaloCoreEndpoints.EconomyOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/players/{player}/stores/operations",
             HttpMethod.Get,
             true,
@@ -407,7 +407,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of RewardTrack containing information for reward track tiers. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<RewardTrackMetadata, HaloApiErrorContainer>> EconomyGetRewardTrack(string player, string rewardTrackType, string trackId)
     {
-        return await this.ExecuteAPIRequest<RewardTrackMetadata>(
+        return await ExecuteAPIRequest<RewardTrackMetadata>(
             $"https://{HaloCoreEndpoints.EconomyOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/players/{player}/rewardtracks/{rewardTrackType}s/{trackId}",
             HttpMethod.Get,
             true,
@@ -423,7 +423,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of CurrencySnapshot that contains the balances. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<CurrencySnapshot, HaloApiErrorContainer>> EconomyGetVirtualCurrencyBalances(string player)
     {
-        return await this.ExecuteAPIRequest<CurrencySnapshot>(
+        return await ExecuteAPIRequest<CurrencySnapshot>(
             $"https://{HaloCoreEndpoints.EconomyOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/players/{player}/currencies",
             HttpMethod.Get,
             true,
@@ -439,7 +439,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of StoreItem that contains information about items in the store. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<StoreItem, HaloApiErrorContainer>> EconomyGetXpGrantsStore(string player)
     {
-        return await this.ExecuteAPIRequest<StoreItem>(
+        return await ExecuteAPIRequest<StoreItem>(
             $"https://{HaloCoreEndpoints.EconomyOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/players/{player}/stores/xpgrants",
             HttpMethod.Get,
             true,
@@ -456,7 +456,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of Core containing core information. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<GenericCore, HaloApiErrorContainer>> EconomyOwnedCoreDetails(string player, string coreId)
     {
-        return await this.ExecuteAPIRequest<GenericCore>(
+        return await ExecuteAPIRequest<GenericCore>(
             $"https://{HaloCoreEndpoints.EconomyOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/players/{player}/cores/{coreId}",
             HttpMethod.Get,
             true,
@@ -472,7 +472,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of AppearanceCustomization containing customization information. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<AppearanceCustomization, HaloApiErrorContainer>> EconomyPlayerAppearanceCustomization(string player)
     {
-        return await this.ExecuteAPIRequest<AppearanceCustomization>(
+        return await ExecuteAPIRequest<AppearanceCustomization>(
             $"https://{HaloCoreEndpoints.EconomyOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/players/{player}/customization/appearance",
             HttpMethod.Get,
             true,
@@ -489,7 +489,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of CustomizationData containing player customizations. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<CustomizationData, HaloApiErrorContainer>> EconomyPlayerCustomization(string player, string viewType)
     {
-        return await this.ExecuteAPIRequest<CustomizationData>(
+        return await ExecuteAPIRequest<CustomizationData>(
             $"https://{HaloCoreEndpoints.EconomyOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/players/{player}/customization?view={viewType}",
             HttpMethod.Get,
             true,
@@ -505,7 +505,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of OperationRewardTrackSnapshot containing battle pass information. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<OperationRewardTrackSnapshot, HaloApiErrorContainer>> EconomyPlayerOperations(string player)
     {
-        return await this.ExecuteAPIRequest<OperationRewardTrackSnapshot>(
+        return await ExecuteAPIRequest<OperationRewardTrackSnapshot>(
             $"https://{HaloCoreEndpoints.EconomyOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/players/{player}/rewardtracks/operations",
             HttpMethod.Get,
             true,
@@ -525,7 +525,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of TransactionSnapshot listing all existing transactions. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<TransactionSnapshot, HaloApiErrorContainer>> EconomyPostCurrencyTransaction(string player, string currencyId)
     {
-        return await this.ExecuteAPIRequest<TransactionSnapshot>(
+        return await ExecuteAPIRequest<TransactionSnapshot>(
             $"https://{HaloCoreEndpoints.EconomyOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/players/{player}/currencies/{currencyId}/transactions",
             HttpMethod.Get,
             true,
@@ -541,7 +541,7 @@ public class HaloInfiniteClient
     /// <returns>Unknown.</returns>
     private async Task<HaloApiResultContainer<string, HaloApiErrorContainer>> EconomyPurchaseStorefrontOfferingTransaction(string player)
     {
-        return await this.ExecuteAPIRequest<string>(
+        return await ExecuteAPIRequest<string>(
             $"https://{HaloCoreEndpoints.EconomyOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/players/{player}/storetransactions",
             HttpMethod.Get,
             true,
@@ -560,7 +560,7 @@ public class HaloInfiniteClient
     [System.Diagnostics.CodeAnalysis.SuppressMessage("StyleCop.CSharp.OrderingRules", "SA1202:Elements should be ordered by access", Justification = "Currently maintaining the order of APIs that are outlined in the endpoints response.")]
     public async Task<HaloApiResultContainer<StoreItem, HaloApiErrorContainer>> EconomyScheduledStorefrontOfferings(string player, string storeId)
     {
-        return await this.ExecuteAPIRequest<StoreItem>(
+        return await ExecuteAPIRequest<StoreItem>(
             $"https://{HaloCoreEndpoints.EconomyOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/players/{player}/stores/{storeId}",
             HttpMethod.Get,
             true,
@@ -576,7 +576,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of SpartanBody containing the customization information. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<SpartanBody, HaloApiErrorContainer>> EconomySpartanBodyCustomization(string player)
     {
-        return await this.ExecuteAPIRequest<SpartanBody>(
+        return await ExecuteAPIRequest<SpartanBody>(
             $"https://{HaloCoreEndpoints.EconomyOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/players/{player}/customization/spartanbody",
             HttpMethod.Get,
             true,
@@ -593,7 +593,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of VehicleCore. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<VehicleCore, HaloApiErrorContainer>> EconomyVehicleCoreCustomization(string player, string coreId)
     {
-        return await this.ExecuteAPIRequest<VehicleCore>(
+        return await ExecuteAPIRequest<VehicleCore>(
             $"https://{HaloCoreEndpoints.EconomyOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/players/{player}/customization/vehicles/{coreId}",
             HttpMethod.Get,
             true,
@@ -609,7 +609,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of VehicleCoreCollection containing a list of available vehicle cores. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<VehicleCoreCollection, HaloApiErrorContainer>> EconomyVehicleCoresCustomization(string player)
     {
-        return await this.ExecuteAPIRequest<VehicleCoreCollection>(
+        return await ExecuteAPIRequest<VehicleCoreCollection>(
             $"https://{HaloCoreEndpoints.EconomyOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/players/{player}/customization/vehicles",
             HttpMethod.Get,
             true,
@@ -626,7 +626,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of WeaponCore containing information about the weapon core. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<WeaponCore, HaloApiErrorContainer>> EconomyWeaponCoreCustomization(string player, string coreId)
     {
-        return await this.ExecuteAPIRequest<WeaponCore>(
+        return await ExecuteAPIRequest<WeaponCore>(
             $"https://{HaloCoreEndpoints.EconomyOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/players/{player}/customization/weapons/{coreId}",
             HttpMethod.Get,
             true,
@@ -642,7 +642,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of WeaponCoreCollection. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<WeaponCoreCollection, HaloApiErrorContainer>> EconomyWeaponCoresCustomization(string player)
     {
-        return await this.ExecuteAPIRequest<WeaponCoreCollection>(
+        return await ExecuteAPIRequest<WeaponCoreCollection>(
             $"https://{HaloCoreEndpoints.EconomyOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/players/{player}/customization/weapons",
             HttpMethod.Get,
             true,
@@ -664,7 +664,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of AchievementCollection that contains the list of available achievements. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<AchievementCollection, HaloApiErrorContainer>> GameCmsGetAchievements()
     {
-        return await this.ExecuteAPIRequest<AchievementCollection>(
+        return await ExecuteAPIRequest<AchievementCollection>(
             $"https://{HaloCoreEndpoints.GameCmsOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/Multiplayer/file/Live/Achievements.json",
             HttpMethod.Get,
             true,
@@ -679,7 +679,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of AsyncComputeOverrides containing override metadata. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<AsyncComputeOverrides, HaloApiErrorContainer>> GameCmsGetAsyncComputeOverrides()
     {
-        return await this.ExecuteAPIRequest<AsyncComputeOverrides>(
+        return await ExecuteAPIRequest<AsyncComputeOverrides>(
             $"https://{HaloCoreEndpoints.GameCmsOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/Specs/file/graphics/AsyncComputeOverrides.json",
             HttpMethod.Get,
             true,
@@ -696,7 +696,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of Challenge containing challenge information. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<Challenge, HaloApiErrorContainer>> GameCmsGetChallenge(string challengePath, string flightId)
     {
-        return await this.ExecuteAPIRequest<Challenge>(
+        return await ExecuteAPIRequest<Challenge>(
             $"https://{HaloCoreEndpoints.GameCmsOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/Progression/file/{challengePath}?flight={flightId}",
             HttpMethod.Get,
             true,
@@ -713,7 +713,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of ChallengeDeckDefinition containing challenge deck metadata. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<ChallengeDeckDefinition, HaloApiErrorContainer>> GameCmsGetChallengeDeck(string challengeDeckPath, string flightId)
     {
-        return await this.ExecuteAPIRequest<ChallengeDeckDefinition>(
+        return await ExecuteAPIRequest<ChallengeDeckDefinition>(
             $"https://{HaloCoreEndpoints.GameCmsOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/Progression/file/{challengeDeckPath}?flight={flightId}",
             HttpMethod.Get,
             true,
@@ -730,7 +730,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of CurrencyDefinition containing information about the specified currency. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<CurrencyDefinition, HaloApiErrorContainer>> GameCmsGetCurrency(string currencyPath, string flightId)
     {
-        return await this.ExecuteAPIRequest<CurrencyDefinition>(
+        return await ExecuteAPIRequest<CurrencyDefinition>(
             $"https://{HaloCoreEndpoints.GameCmsOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/Progression/file/{currencyPath}?flight={flightId}",
             HttpMethod.Get,
             true,
@@ -750,7 +750,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of ClawAccessSnapshot containing relevant XUID lists. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<ClawAccessSnapshot, HaloApiErrorContainer>> GameCmsGetClawAccess(string flightId)
     {
-        return await this.ExecuteAPIRequest<ClawAccessSnapshot>(
+        return await ExecuteAPIRequest<ClawAccessSnapshot>(
             $"https://{HaloCoreEndpoints.GameCmsOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/TitleAuthorization/file/claw/access.json?flight={flightId}",
             HttpMethod.Get,
             true,
@@ -765,7 +765,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of CPUPresetSnapshot containing preset information. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<CPUPresetSnapshot, HaloApiErrorContainer>> GameCmsGetCpuPresets()
     {
-        return await this.ExecuteAPIRequest<CPUPresetSnapshot>(
+        return await ExecuteAPIRequest<CPUPresetSnapshot>(
             $"https://{HaloCoreEndpoints.GameCmsOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/Specs/file/cpu/presets.json",
             HttpMethod.Get,
             true,
@@ -780,7 +780,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of CustomGameDefinition containing game parameters. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<CustomGameDefinition, HaloApiErrorContainer>> GameCmsGetCustomGameDefaults()
     {
-        return await this.ExecuteAPIRequest<CustomGameDefinition>(
+        return await ExecuteAPIRequest<CustomGameDefinition>(
             $"https://{HaloCoreEndpoints.GameCmsOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/Multiplayer/file/NonMatchmaking/customgame.json",
             HttpMethod.Get,
             true,
@@ -796,7 +796,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of InventoryDefinition containing the full list of available items. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<InventoryDefinition, HaloApiErrorContainer>> GameCmsGetCustomizationCatalog(string flightId)
     {
-        return await this.ExecuteAPIRequest<InventoryDefinition>(
+        return await ExecuteAPIRequest<InventoryDefinition>(
             $"https://{HaloCoreEndpoints.GameCmsOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/Progression/file/inventory/catalog/inventory_catalog.json?flight={flightId}",
             HttpMethod.Get,
             true,
@@ -814,7 +814,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, an instance of DevicePresetOverrides. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<DevicePresetOverrides, HaloApiErrorContainer>> GameCmsGetDevicePresetOverrides()
     {
-        return await this.ExecuteAPIRequest<DevicePresetOverrides>(
+        return await ExecuteAPIRequest<DevicePresetOverrides>(
             $"https://{HaloCoreEndpoints.GameCmsOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/Specs/file/graphics/DevicePresetOverrides.json",
             HttpMethod.Get,
             true,
@@ -831,7 +831,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, an instance of RewardTrackMetadata is returned. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<RewardTrackMetadata, HaloApiErrorContainer>> GameCmsGetEvent(string eventPath, string flightId)
     {
-        return await this.ExecuteAPIRequest<RewardTrackMetadata>(
+        return await ExecuteAPIRequest<RewardTrackMetadata>(
             $"https://{HaloCoreEndpoints.GameCmsOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/Progression/file/{eventPath}?flight={flightId}",
             HttpMethod.Get,
             true,
@@ -846,7 +846,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of OverrideQueryDefinition containing query definitions. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<OverrideQueryDefinition, HaloApiErrorContainer>> GameCmsGetGraphicsSpecControlOverrides()
     {
-        return await this.ExecuteAPIRequest<OverrideQueryDefinition>(
+        return await ExecuteAPIRequest<OverrideQueryDefinition>(
             $"https://{HaloCoreEndpoints.GameCmsOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/Specs/file/graphics/GraphicsSpecControlOverrides.json",
             HttpMethod.Get,
             true,
@@ -863,7 +863,7 @@ public class HaloInfiniteClient
     /// <returns>Returns a string containing the response.</returns>
     public async Task<HaloApiResultContainer<string, HaloApiErrorContainer>> GameCmsGetGraphicSpecs()
     {
-        return await this.ExecuteAPIRequest<string>(
+        return await ExecuteAPIRequest<string>(
             $"https://{HaloCoreEndpoints.GameCmsOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/Specs/file/graphics/overrides.json",
             HttpMethod.Get,
             true,
@@ -878,7 +878,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns the byte array for the requested image. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<byte[], HaloApiErrorContainer>> GameCmsGetImage(string filePath)
     {
-        return await this.ExecuteAPIRequest<byte[]>(
+        return await ExecuteAPIRequest<byte[]>(
             $"https://{HaloCoreEndpoints.GameCmsOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/images/file/{filePath}",
             HttpMethod.Get,
             true,
@@ -898,7 +898,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, an instance of InGameItem. Otherwise, null.</returns>
     public async Task<HaloApiResultContainer<InGameItem, HaloApiErrorContainer>> GameCmsGetItem(string itemPath, string flightId)
     {
-        return await this.ExecuteAPIRequest<InGameItem>(
+        return await ExecuteAPIRequest<InGameItem>(
             $"https://{HaloCoreEndpoints.GameCmsOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/Progression/file/{itemPath}?flight={flightId}",
             HttpMethod.Get,
             true,
@@ -914,7 +914,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of LobbyHopperErrorMessageList that contains possible errors. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<LobbyHopperErrorMessageList, HaloApiErrorContainer>> GameCmsGetLobbyErrorMessages(string flightId)
     {
-        return await this.ExecuteAPIRequest<LobbyHopperErrorMessageList>(
+        return await ExecuteAPIRequest<LobbyHopperErrorMessageList>(
             $"https://{HaloCoreEndpoints.GameCmsOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/Multiplayer/file/gameStartErrorMessages/LobbyHoppperErrorMessageList.json?flight={flightId}",
             HttpMethod.Get,
             true,
@@ -930,7 +930,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, an instance of Metadata containing the information about in-game manufacturers and currencies. Otherwise, null.</returns>
     public async Task<HaloApiResultContainer<Metadata, HaloApiErrorContainer>> GameCmsGetMetadata(string flightId)
     {
-        return await this.ExecuteAPIRequest<Metadata>(
+        return await ExecuteAPIRequest<Metadata>(
             $"https://{HaloCoreEndpoints.GameCmsOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/Progression/file/metadata/metadata.json?flight={flightId}",
             HttpMethod.Get,
             true,
@@ -946,7 +946,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of NetworkConfiguration. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<NetworkConfiguration, HaloApiErrorContainer>> GameCmsGetNetworkConfiguration(string flightId)
     {
-        return await this.ExecuteAPIRequest<NetworkConfiguration>(
+        return await ExecuteAPIRequest<NetworkConfiguration>(
             $"https://{HaloCoreEndpoints.GameCmsOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/Multiplayer/file/network/config.json?flight={flightId}",
             HttpMethod.Get,
             true,
@@ -962,7 +962,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns a News instance containing the currently active news. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<News, HaloApiErrorContainer>> GameCmsGetNews(string filePath)
     {
-        return await this.ExecuteAPIRequest<News>(
+        return await ExecuteAPIRequest<News>(
             $"https://{HaloCoreEndpoints.GameCmsOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/news/file/{filePath}",
             HttpMethod.Get,
             true,
@@ -978,7 +978,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, an instance of OEConfiguration containing the message. Otherwise, null.</returns>
     public async Task<HaloApiResultContainer<OEConfiguration, HaloApiErrorContainer>> GameCmsGetNotAllowedInTitleMessage()
     {
-        return await this.ExecuteAPIRequest<OEConfiguration>(
+        return await ExecuteAPIRequest<OEConfiguration>(
             $"https://{HaloCoreEndpoints.GameCmsOrigin}.{HaloCoreEndpoints.ServiceDomain}/branches/hi/OEConfiguration/data/authfail/Default.json",
             HttpMethod.Get,
             false,
@@ -994,7 +994,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of T, where T is the type of the progression file. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<T, HaloApiErrorContainer>> GameCmsGetProgressionFile<T>(string filePath)
     {
-        return await this.ExecuteAPIRequest<T>(
+        return await ExecuteAPIRequest<T>(
             $"https://{HaloCoreEndpoints.GameCmsOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/Progression/file/{filePath}",
             HttpMethod.Get,
             true,
@@ -1009,7 +1009,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of DriverManifest that contains details on supported drivers. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<DriverManifest, HaloApiErrorContainer>> GameCmsGetRecommendedDrivers()
     {
-        return await this.ExecuteAPIRequest<DriverManifest>(
+        return await ExecuteAPIRequest<DriverManifest>(
             $"https://{HaloCoreEndpoints.GameCmsOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/Specs/file/graphics/RecommendedDrivers.json",
             HttpMethod.Get,
             true,
@@ -1029,7 +1029,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, an instance of SeasonRewardTrack containing season information. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<SeasonRewardTrack, HaloApiErrorContainer>> GameCmsGetSeasonRewardTrack(string seasonPath, string flightId)
     {
-        return await this.ExecuteAPIRequest<SeasonRewardTrack>(
+        return await ExecuteAPIRequest<SeasonRewardTrack>(
             $"https://{HaloCoreEndpoints.GameCmsOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/Progression/file/{seasonPath}?flight={flightId}",
             HttpMethod.Get,
             true,
@@ -1049,7 +1049,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, an instance of GuideContainer containing file information. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<GuideContainer, HaloApiErrorContainer>> GameCmsGetGuideImages(string flightId)
     {
-        return await this.ExecuteAPIRequest<GuideContainer>(
+        return await ExecuteAPIRequest<GuideContainer>(
             $"https://{HaloCoreEndpoints.GameCmsOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/images/guide/xo?flight={flightId}",
             HttpMethod.Get,
             true,
@@ -1065,7 +1065,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, an instance of GuideContainer containing file information. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<GuideContainer, HaloApiErrorContainer>> GameCmsGetGuideMultiplayer(string flightId)
     {
-        return await this.ExecuteAPIRequest<GuideContainer>(
+        return await ExecuteAPIRequest<GuideContainer>(
             $"https://{HaloCoreEndpoints.GameCmsOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/Multiplayer/guide/xo?flight={flightId}",
             HttpMethod.Get,
             true,
@@ -1081,7 +1081,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, an instance of GuideContainer containing file information. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<GuideContainer, HaloApiErrorContainer>> GameCmsGetGuideNews(string flightId)
     {
-        return await this.ExecuteAPIRequest<GuideContainer>(
+        return await ExecuteAPIRequest<GuideContainer>(
             $"https://{HaloCoreEndpoints.GameCmsOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/News/guide/xo?flight={flightId}",
             HttpMethod.Get,
             true,
@@ -1097,7 +1097,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, an instance of GuideContainer containing file information. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<GuideContainer, HaloApiErrorContainer>> GameCmsGetGuideProgression(string flightId)
     {
-        return await this.ExecuteAPIRequest<GuideContainer>(
+        return await ExecuteAPIRequest<GuideContainer>(
             $"https://{HaloCoreEndpoints.GameCmsOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/Progression/guide/xo?flight={flightId}",
             HttpMethod.Get,
             true,
@@ -1113,7 +1113,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, an instance of GuideContainer containing file information. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<GuideContainer, HaloApiErrorContainer>> GameCmsGetGuideSpecs(string flightId)
     {
-        return await this.ExecuteAPIRequest<GuideContainer>(
+        return await ExecuteAPIRequest<GuideContainer>(
             $"https://{HaloCoreEndpoints.GameCmsOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/Specs/guide/xo?flight={flightId}",
             HttpMethod.Get,
             true,
@@ -1129,7 +1129,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, an instance of GuideContainer containing file information. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<GuideContainer, HaloApiErrorContainer>> GameCmsGetGuideTitleAuthorization(string flightId)
     {
-        return await this.ExecuteAPIRequest<GuideContainer>(
+        return await ExecuteAPIRequest<GuideContainer>(
             $"https://{HaloCoreEndpoints.GameCmsOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/TitleAuthorization/guide/xo?flight={flightId}",
             HttpMethod.Get,
             true,
@@ -1152,7 +1152,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of FavoriteAsset containing asset information. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<FavoriteAsset, HaloApiErrorContainer>> HIUGCCheckAssetPlayerBookmark(string title, string player, string assetType, string assetId)
     {
-        return await this.ExecuteAPIRequest<FavoriteAsset>(
+        return await ExecuteAPIRequest<FavoriteAsset>(
             $"https://{HaloCoreEndpoints.AuthoringOrigin}.{HaloCoreEndpoints.ServiceDomain}/{title}/players/{player}/favorites/{assetType}/{assetId}",
             HttpMethod.Get,
             true,
@@ -1171,7 +1171,7 @@ public class HaloInfiniteClient
     /// <returns>If version creation is successful, returns an instance of AuthoringAssetVersion. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<AuthoringAssetVersion, HaloApiErrorContainer>> HIUGCCreateAssetVersionAgnostic(string title, string assetType, string assetId, AuthoringSessionSourceStarter starter)
     {
-        return await this.ExecuteAPIRequest<AuthoringAssetVersion>(
+        return await ExecuteAPIRequest<AuthoringAssetVersion>(
             $"https://{HaloCoreEndpoints.AuthoringOrigin}.{HaloCoreEndpoints.ServiceDomain}/{title}/{assetType}/{assetId}/versions",
             HttpMethod.Post,
             true,
@@ -1189,7 +1189,7 @@ public class HaloInfiniteClient
     /// <returns>If deletion is successful, returns true. Otherwise, returns false.</returns>
     public async Task<HaloApiResultContainer<bool, HaloApiErrorContainer>> HIUGCDeleteAllVersions(string title, string assetType, string assetId)
     {
-        return await this.ExecuteAPIRequest<bool>(
+        return await ExecuteAPIRequest<bool>(
             $"https://{HaloCoreEndpoints.AuthoringOrigin}.{HaloCoreEndpoints.ServiceDomain}/{title}/{assetType}/{assetId}/versions",
             HttpMethod.Delete,
             true,
@@ -1206,7 +1206,7 @@ public class HaloInfiniteClient
     /// <returns>If deletion is successful, returns true. Otherwise, returns false.</returns>
     public async Task<HaloApiResultContainer<bool, HaloApiErrorContainer>> HIUGCDeleteAsset(string title, string assetType, string assetId)
     {
-        return await this.ExecuteAPIRequest<bool>(
+        return await ExecuteAPIRequest<bool>(
             $"https://{HaloCoreEndpoints.AuthoringOrigin}.{HaloCoreEndpoints.ServiceDomain}/{title}/{assetType}/{assetId}",
             HttpMethod.Delete,
             true,
@@ -1224,7 +1224,7 @@ public class HaloInfiniteClient
     /// <returns>If deletion is successful, returns true. Otherwise, returns false.</returns>
     public async Task<HaloApiResultContainer<bool, HaloApiErrorContainer>> HIUGCDeleteVersion(string title, string assetType, string assetId, string versionId)
     {
-        return await this.ExecuteAPIRequest<bool>(
+        return await ExecuteAPIRequest<bool>(
             $"https://{HaloCoreEndpoints.AuthoringOrigin}.{HaloCoreEndpoints.ServiceDomain}/{title}/{assetType}/{assetId}/versions/{versionId}",
             HttpMethod.Delete,
             true,
@@ -1241,7 +1241,7 @@ public class HaloInfiniteClient
     /// <returns>If session termination is successful, return true. Otherwise, returns false.</returns>
     public async Task<HaloApiResultContainer<bool, HaloApiErrorContainer>> HIUGCEndSession(string title, string assetType, string assetId)
     {
-        return await this.ExecuteAPIRequest<bool>(
+        return await ExecuteAPIRequest<bool>(
             $"https://{HaloCoreEndpoints.AuthoringOrigin}.{HaloCoreEndpoints.ServiceDomain}/{title}/{assetType}/{assetId}/sessions/active",
             HttpMethod.Delete,
             true,
@@ -1262,7 +1262,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of FavoriteAsset confirming the addition of the asset to favorites. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<FavoriteAsset, HaloApiErrorContainer>> HIUGCFavoriteAnAsset(string player, string assetType, string assetId)
     {
-        return await this.ExecuteAPIRequest<FavoriteAsset>(
+        return await ExecuteAPIRequest<FavoriteAsset>(
             $"https://{HaloCoreEndpoints.AuthoringOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/players/{player}/favorites/{assetType}/{assetId}",
             HttpMethod.Put,
             true,
@@ -1281,7 +1281,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of AuthoringAsset containing authoring metadata. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<AuthoringAsset, HaloApiErrorContainer>> HIUGCGetAsset(string title, string assetType, string assetId)
     {
-        return await this.ExecuteAPIRequest<AuthoringAsset>(
+        return await ExecuteAPIRequest<AuthoringAsset>(
             $"https://{HaloCoreEndpoints.AuthoringOrigin}.{HaloCoreEndpoints.ServiceDomain}/{title}/{assetType}/{assetId}",
             HttpMethod.Get,
             true,
@@ -1296,7 +1296,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns a binary blob containing file data. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<byte[], HaloApiErrorContainer>> HIUGCGetBlob(string blobPath)
     {
-        return await this.ExecuteAPIRequest<byte[]>(
+        return await ExecuteAPIRequest<byte[]>(
             $"https://blobs-infiniteugc.{HaloCoreEndpoints.ServiceDomain}/{blobPath}",
             HttpMethod.Get,
             false,
@@ -1316,7 +1316,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of AuthoringAssetVersion containing film data in the CustomData property. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<AuthoringAssetVersion, HaloApiErrorContainer>> HIUGCGetLatestAssetVersionFilm(string title, string assetId)
     {
-        return await this.ExecuteAPIRequest<AuthoringAssetVersion>(
+        return await ExecuteAPIRequest<AuthoringAssetVersion>(
             $"https://{HaloCoreEndpoints.AuthoringOrigin}.{HaloCoreEndpoints.ServiceDomain}/{title}/films/{assetId}/versions/latest",
             HttpMethod.Get,
             true,
@@ -1337,7 +1337,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of AuthoringAssetVersion containing version metadata for an asset. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<AuthoringAssetVersion, HaloApiErrorContainer>> HIUGCGetLatestAssetVersionAgnostic(string title, string assetType, string assetId)
     {
-        return await this.ExecuteAPIRequest<AuthoringAssetVersion>(
+        return await ExecuteAPIRequest<AuthoringAssetVersion>(
             $"https://{HaloCoreEndpoints.AuthoringOrigin}.{HaloCoreEndpoints.ServiceDomain}/{title}/{assetType}/{assetId}/versions/latest",
             HttpMethod.Get,
             true,
@@ -1355,7 +1355,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of AuthoringAssetVersion containing version metadata for a published asset. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<AuthoringAssetVersion, HaloApiErrorContainer>> HIUGCGetPublishedVersion(string title, string assetType, string assetId)
     {
-        return await this.ExecuteAPIRequest<AuthoringAssetVersion>(
+        return await ExecuteAPIRequest<AuthoringAssetVersion>(
             $"https://{HaloCoreEndpoints.AuthoringOrigin}.{HaloCoreEndpoints.ServiceDomain}/{title}/{assetType}/{assetId}/versions/published",
             HttpMethod.Get,
             true,
@@ -1374,7 +1374,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of AuthoringAssetVersion that contains asset version information. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<AuthoringAssetVersion, HaloApiErrorContainer>> HIUGCGetSpecificAssetVersion(string title, string assetType, string assetId, string versionId)
     {
-        return await this.ExecuteAPIRequest<AuthoringAssetVersion>(
+        return await ExecuteAPIRequest<AuthoringAssetVersion>(
             $"https://{HaloCoreEndpoints.AuthoringOrigin}.{HaloCoreEndpoints.ServiceDomain}/{title}/{assetType}/{assetId}/versions/{versionId}",
             HttpMethod.Get,
             true,
@@ -1395,7 +1395,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of AuthoringAssetVersionContainer that contains information about all available versions for an asset. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<AuthoringAssetVersionContainer, HaloApiErrorContainer>> HIUGCListAllVersions(string title, string assetType, string assetId)
     {
-        return await this.ExecuteAPIRequest<AuthoringAssetVersionContainer>(
+        return await ExecuteAPIRequest<AuthoringAssetVersionContainer>(
             $"https://{HaloCoreEndpoints.AuthoringOrigin}.{HaloCoreEndpoints.ServiceDomain}/{title}/{assetType}/{assetId}/versions",
             HttpMethod.Get,
             true,
@@ -1428,7 +1428,7 @@ public class HaloInfiniteClient
             formattedKeywordList = string.Join(",", keywords);
         }
 
-        return await this.ExecuteAPIRequest<AuthoringAssetContainer>(
+        return await ExecuteAPIRequest<AuthoringAssetContainer>(
             $"https://{HaloCoreEndpoints.AuthoringOrigin}.{HaloCoreEndpoints.ServiceDomain}/{title}/players/{player}/assets?start={start}&count={count}&include-times={includeTimes}&sort={sort}&order={order}&keywords={formattedKeywordList}&kind={kind}",
             HttpMethod.Get,
             true,
@@ -1448,7 +1448,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of AuthoringFavoritesContainer containing the list of favorites. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<AuthoringFavoritesContainer, HaloApiErrorContainer>> HIUGCListPlayerFavorites(string player, string assetType)
     {
-        return await this.ExecuteAPIRequest<AuthoringFavoritesContainer>(
+        return await ExecuteAPIRequest<AuthoringFavoritesContainer>(
             $"https://{HaloCoreEndpoints.AuthoringOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/players/{player}/favorites/{assetType}",
             HttpMethod.Get,
             true,
@@ -1467,7 +1467,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of AuthoringFavoritesContainer containing the list of favorites. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<AuthoringFavoritesContainer, HaloApiErrorContainer>> HIUGCListPlayerFavoritesAgnostic(string player)
     {
-        return await this.ExecuteAPIRequest<AuthoringFavoritesContainer>(
+        return await ExecuteAPIRequest<AuthoringFavoritesContainer>(
             $"https://{HaloCoreEndpoints.AuthoringOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/players/{player}/favorites",
             HttpMethod.Get,
             true,
@@ -1487,7 +1487,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of HIUGCPatchAssetVersion containing the changes. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<AuthoringAssetVersion, HaloApiErrorContainer>> HIUGCPatchAssetVersion(string title, string assetType, string assetId, string versionId, AuthoringAssetVersion patchedAsset)
     {
-        return await this.ExecuteAPIRequest<AuthoringAssetVersion>(
+        return await ExecuteAPIRequest<AuthoringAssetVersion>(
             $"https://{HaloCoreEndpoints.AuthoringOrigin}.{HaloCoreEndpoints.ServiceDomain}/{title}/{assetType}/{assetId}/versions/{versionId}",
             HttpMethod.Patch,
             true,
@@ -1506,7 +1506,7 @@ public class HaloInfiniteClient
     /// <returns>If the publishing process is successful, returns true. Otherwise, returns false.</returns>
     public async Task<HaloApiResultContainer<bool, HaloApiErrorContainer>> HIUGCPublishAssetVersion(string assetType, string assetId, string versionId, string clearanceId)
     {
-        return await this.ExecuteAPIRequest<bool>(
+        return await ExecuteAPIRequest<bool>(
             $"https://{HaloCoreEndpoints.AuthoringOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/{assetType}/{assetId}/publish/{versionId}?clearanceId={clearanceId}",
             HttpMethod.Post,
             true,
@@ -1527,7 +1527,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of AuthoringAssetRating containing rating information. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<AuthoringAssetRating, HaloApiErrorContainer>> HIUGCGetAssetRatings(string player, string assetType, string assetId)
     {
-        return await this.ExecuteAPIRequest<AuthoringAssetRating>(
+        return await ExecuteAPIRequest<AuthoringAssetRating>(
             $"https://{HaloCoreEndpoints.AuthoringOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/players/{player}/ratings/{assetType}/{assetId}",
             HttpMethod.Get,
             true,
@@ -1546,7 +1546,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of AuthoringAssetRating containing the updated rating. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<AuthoringAssetRating, HaloApiErrorContainer>> HIUGCRateAnAsset(string player, string assetType, string assetId, AuthoringAssetRating rating)
     {
-        return await this.ExecuteAPIRequest<AuthoringAssetRating>(
+        return await ExecuteAPIRequest<AuthoringAssetRating>(
             $"https://{HaloCoreEndpoints.AuthoringOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/players/{player}/ratings/{assetType}/{assetId}",
             HttpMethod.Put,
             true,
@@ -1565,7 +1565,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of AssetReport containing the report information. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<AssetReport, HaloApiErrorContainer>> HIUGCReportAnAsset(string player, string assetType, string assetId, AssetReport report)
     {
-        return await this.ExecuteAPIRequest<AssetReport>(
+        return await ExecuteAPIRequest<AssetReport>(
             $"https://{HaloCoreEndpoints.AuthoringOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/players/{player}/reports/{assetType}/{assetId}",
             HttpMethod.Put,
             true,
@@ -1595,7 +1595,7 @@ public class HaloInfiniteClient
             throw new ArgumentNullException(nameof(asset), "You need to provide an asset definition to create one. Make sure the `asset` object is not null or unspecified.");
         }
 
-        return await this.ExecuteAPIRequest<AuthoringAsset>(
+        return await ExecuteAPIRequest<AuthoringAsset>(
             $"https://{HaloCoreEndpoints.AuthoringOrigin}.{HaloCoreEndpoints.ServiceDomain}/{title}/{assetType}",
             HttpMethod.Post,
             true,
@@ -1627,7 +1627,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of AssetAuthoringSession with details about the created session. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<AssetAuthoringSession, HaloApiErrorContainer>> HIUGCStartSessionAgnostic(string title, string assetType, string assetId, bool includeContainerSas, AuthoringSessionStarter starter)
     {
-        return await this.ExecuteAPIRequest<AssetAuthoringSession>(
+        return await ExecuteAPIRequest<AssetAuthoringSession>(
             $"https://{HaloCoreEndpoints.AuthoringOrigin}.{HaloCoreEndpoints.ServiceDomain}/{title}/{assetType}/{assetId}/sessions?include-container-sas={includeContainerSas}",
             HttpMethod.Post,
             true,
@@ -1651,7 +1651,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of AssetAuthoringSession with details about the created session. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<AssetAuthoringSession, HaloApiErrorContainer>> HIUGCExtendSessionAgnostic(string title, string assetType, string assetId, bool includeContainerSas)
     {
-        return await this.ExecuteAPIRequest<AssetAuthoringSession>(
+        return await ExecuteAPIRequest<AssetAuthoringSession>(
             $"https://{HaloCoreEndpoints.AuthoringOrigin}.{HaloCoreEndpoints.ServiceDomain}/{title}/{assetType}/{assetId}/sessions?include-container-sas={includeContainerSas}",
             HttpMethod.Patch,
             true,
@@ -1669,7 +1669,7 @@ public class HaloInfiniteClient
     /// <returns>If the request to delete the session is successful, returns true. Otherwise, returns false.</returns>
     public async Task<HaloApiResultContainer<bool, HaloApiErrorContainer>> HIUGCDeleteSessionAgnostic(string title, string assetType, string assetId)
     {
-        return await this.ExecuteAPIRequest<bool>(
+        return await ExecuteAPIRequest<bool>(
             $"https://{HaloCoreEndpoints.AuthoringOrigin}.{HaloCoreEndpoints.ServiceDomain}/{title}/{assetType}/{assetId}/sessions",
             HttpMethod.Delete,
             true,
@@ -1690,7 +1690,7 @@ public class HaloInfiniteClient
     /// <returns>If the request to undelete an asset was successful, returns true. Otherwise, returns false.</returns>
     public async Task<HaloApiResultContainer<bool, HaloApiErrorContainer>> HIUGCUndeleteAsset(string title, string assetType, string assetId)
     {
-        return await this.ExecuteAPIRequest<bool>(
+        return await ExecuteAPIRequest<bool>(
             $"https://{HaloCoreEndpoints.AuthoringOrigin}.{HaloCoreEndpoints.ServiceDomain}/{title}/{assetType}/{assetId}/recover",
             HttpMethod.Post,
             true,
@@ -1708,7 +1708,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns true. Otherwise, returns false.</returns>
     public async Task<HaloApiResultContainer<bool, HaloApiErrorContainer>> HIUGCUndeleteVersion(string title, string assetType, string assetId, string versionId)
     {
-        return await this.ExecuteAPIRequest<bool>(
+        return await ExecuteAPIRequest<bool>(
             $"https://{HaloCoreEndpoints.AuthoringOrigin}.{HaloCoreEndpoints.ServiceDomain}/{title}/{assetType}/{assetId}/versions/{versionId}/recover",
             HttpMethod.Post,
             true,
@@ -1724,7 +1724,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns true. Otherwise, returns false.</returns>
     public async Task<HaloApiResultContainer<bool, HaloApiErrorContainer>> HIUGCUnpublishAsset(string assetType, string assetId)
     {
-        return await this.ExecuteAPIRequest<bool>(
+        return await ExecuteAPIRequest<bool>(
             $"https://{HaloCoreEndpoints.AuthoringOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/{assetType}/{assetId}/unpublish",
             HttpMethod.Post,
             true,
@@ -1745,7 +1745,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of EngineGameVariant containing appropriate metadata. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<EngineGameVariant, HaloApiErrorContainer>> HIUGCDiscoveryGetEngineGameVariant(string assetId, string versionId)
     {
-        return await this.ExecuteAPIRequest<EngineGameVariant>(
+        return await ExecuteAPIRequest<EngineGameVariant>(
             $"https://{HaloCoreEndpoints.DiscoveryOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/engineGameVariants/{assetId}/versions/{versionId}",
             HttpMethod.Get,
             true,
@@ -1761,7 +1761,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of EngineGameVariant containing appropriate metadata. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<EngineGameVariant, HaloApiErrorContainer>> HIUGCDiscoveryGetEngineGameVariantWithoutVersion(string assetId)
     {
-        return await this.ExecuteAPIRequest<EngineGameVariant>(
+        return await ExecuteAPIRequest<EngineGameVariant>(
             $"https://{HaloCoreEndpoints.DiscoveryOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/engineGameVariants/{assetId}",
             HttpMethod.Get,
             true,
@@ -1779,7 +1779,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, an instance of <see cref="Manifest"/> representing the asset details. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<Manifest, HaloApiErrorContainer>> HIUGCDiscoveryGetManifest(string assetId, string versionId, string clearanceId)
     {
-        return await this.ExecuteAPIRequest<Manifest>(
+        return await ExecuteAPIRequest<Manifest>(
             $"https://{HaloCoreEndpoints.DiscoveryOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/manifests/{assetId}/versions/{versionId}?clearanceId={clearanceId}",
             HttpMethod.Get,
             true,
@@ -1795,7 +1795,7 @@ public class HaloInfiniteClient
     /// <returns>An instance of Manifest containing game manifest information if request is successful. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<Manifest, HaloApiErrorContainer>> HIUGCDiscoveryGetManifestByBuild(string buildNumber)
     {
-        return await this.ExecuteAPIRequest<Manifest>(
+        return await ExecuteAPIRequest<Manifest>(
             $"https://{HaloCoreEndpoints.DiscoveryOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/manifests/builds/{buildNumber}/game",
             HttpMethod.Get,
             true,
@@ -1812,7 +1812,7 @@ public class HaloInfiniteClient
     /// <returns>An instance of Map containing map metadata if request is successful. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<Map, HaloApiErrorContainer>> HIUGCDiscoveryGetMap(string assetId, string versionId)
     {
-        return await this.ExecuteAPIRequest<Map>(
+        return await ExecuteAPIRequest<Map>(
             $"https://{HaloCoreEndpoints.DiscoveryOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/maps/{assetId}/versions/{versionId}",
             HttpMethod.Get,
             true,
@@ -1834,7 +1834,7 @@ public class HaloInfiniteClient
     /// <returns>An instance of Map containing map metadata if request is successful. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<MapModePair, HaloApiErrorContainer>> HIUGCDiscoveryGetMapModePair(string assetId, string versionId, string clearanceId)
     {
-        return await this.ExecuteAPIRequest<MapModePair>(
+        return await ExecuteAPIRequest<MapModePair>(
             $"https://{HaloCoreEndpoints.DiscoveryOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/mapModePairs/{assetId}/versions/{versionId}?clearanceId={clearanceId}",
             HttpMethod.Get,
             true,
@@ -1850,7 +1850,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of <see cref="Task"/> representing the map and mode combination. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<MapModePair, HaloApiErrorContainer>> HIUGCDiscoveryGetMapModePairWithoutVersion(string assetId)
     {
-        return await this.ExecuteAPIRequest<MapModePair>(
+        return await ExecuteAPIRequest<MapModePair>(
             $"https://{HaloCoreEndpoints.DiscoveryOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/mapModePairs/{assetId}",
             HttpMethod.Get,
             true,
@@ -1867,7 +1867,7 @@ public class HaloInfiniteClient
     /// <returns>An instance of Map containing map metadata if request is successful. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<Map, HaloApiErrorContainer>> HIUGCDiscoveryGetMapWithoutVersion(string assetId)
     {
-        return await this.ExecuteAPIRequest<Map>(
+        return await ExecuteAPIRequest<Map>(
             $"https://{HaloCoreEndpoints.DiscoveryOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/maps/{assetId}",
             HttpMethod.Get,
             true,
@@ -1885,7 +1885,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of Playlist containing playlist information. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<Playlist, HaloApiErrorContainer>> HIUGCDiscoveryGetPlaylist(string assetId, string versionId, string clearanceId)
     {
-        return await this.ExecuteAPIRequest<Playlist>(
+        return await ExecuteAPIRequest<Playlist>(
             $"https://{HaloCoreEndpoints.DiscoveryOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/playlists/{assetId}/versions/{versionId}?clearanceId={clearanceId}",
             HttpMethod.Get,
             true,
@@ -1901,7 +1901,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of <see cref="Playlist"/> representing the targeted playlist. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<Playlist, HaloApiErrorContainer>> HIUGCDiscoveryGetPlaylistWithoutVersion(string assetId)
     {
-        return await this.ExecuteAPIRequest<Playlist>(
+        return await ExecuteAPIRequest<Playlist>(
             $"https://{HaloCoreEndpoints.DiscoveryOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/playlists/{assetId}",
             HttpMethod.Get,
             true,
@@ -1918,7 +1918,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns a <see cref="Prefab"/> instance representing the specific prefab. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<Prefab, HaloApiErrorContainer>> HIUGCDiscoveryGetPrefab(string assetId, string versionId)
     {
-        return await this.ExecuteAPIRequest<Prefab>(
+        return await ExecuteAPIRequest<Prefab>(
             $"https://{HaloCoreEndpoints.DiscoveryOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/prefabs/{assetId}/versions/{versionId}",
             HttpMethod.Get,
             true,
@@ -1934,7 +1934,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns a <see cref="Prefab"/> instance representing the specific prefab. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<Prefab, HaloApiErrorContainer>> HIUGCDiscoveryGetPrefabWithoutVersion(string assetId)
     {
-        return await this.ExecuteAPIRequest<Prefab>(
+        return await ExecuteAPIRequest<Prefab>(
             $"https://{HaloCoreEndpoints.DiscoveryOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/prefabs/{assetId}",
             HttpMethod.Get,
             true,
@@ -1951,7 +1951,7 @@ public class HaloInfiniteClient
     /// <returns>An instance of Project containing current game project information if request is successful. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<Project, HaloApiErrorContainer>> HIUGCDiscoveryGetProject(string assetId, string versionId)
     {
-        return await this.ExecuteAPIRequest<Project>(
+        return await ExecuteAPIRequest<Project>(
             $"https://{HaloCoreEndpoints.DiscoveryOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/projects/{assetId}/versions/{versionId}",
             HttpMethod.Get,
             true,
@@ -1967,7 +1967,7 @@ public class HaloInfiniteClient
     /// <returns>An instance of Project containing current game project information if request is successful. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<Project, HaloApiErrorContainer>> HIUGCDiscoveryGetProjectWithoutVersion(string assetId)
     {
-        return await this.ExecuteAPIRequest<Project>(
+        return await ExecuteAPIRequest<Project>(
             $"https://{HaloCoreEndpoints.DiscoveryOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/projects/{assetId}",
             HttpMethod.Get,
             true,
@@ -1982,7 +1982,7 @@ public class HaloInfiniteClient
     /// <returns>An instance of TagInfo containing a list of tags if the request is successful. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<TagInfo, HaloApiErrorContainer>> HIUGCDiscoveryGetTagsInfo()
     {
-        return await this.ExecuteAPIRequest<TagInfo>(
+        return await ExecuteAPIRequest<TagInfo>(
             $"https://{HaloCoreEndpoints.DiscoveryOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/info/tags",
             HttpMethod.Get,
             true,
@@ -1999,7 +1999,7 @@ public class HaloInfiniteClient
     /// <returns>An instance of UGCGameVariant containing game variant metadata if the request is successful. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<UGCGameVariant, HaloApiErrorContainer>> HIUGCDiscoveryGetUgcGameVariant(string assetId, string versionId)
     {
-        return await this.ExecuteAPIRequest<UGCGameVariant>(
+        return await ExecuteAPIRequest<UGCGameVariant>(
             $"https://{HaloCoreEndpoints.DiscoveryOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/ugcGameVariants/{assetId}/versions/{versionId}",
             HttpMethod.Get,
             true,
@@ -2015,7 +2015,7 @@ public class HaloInfiniteClient
     /// <returns>An instance of GameAssetVariant containing asset metadata if the request is successful. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<UGCGameVariant, HaloApiErrorContainer>> HIUGCDiscoveryGetUgcGameVariantWithoutVersion(string assetId)
     {
-        return await this.ExecuteAPIRequest<UGCGameVariant>(
+        return await ExecuteAPIRequest<UGCGameVariant>(
             $"https://{HaloCoreEndpoints.DiscoveryOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/ugcGameVariants/{assetId}",
             HttpMethod.Get,
             true,
@@ -2036,7 +2036,7 @@ public class HaloInfiniteClient
     /// <returns>If successful, returns an instance of SearchResultsContainer container assets. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<SearchResultsContainer, HaloApiErrorContainer>> HIUGCDiscoverySearch(int start, int count, bool includeTimes, string sort, ResultOrder order, AssetKind assetKind)
     {
-        return await this.ExecuteAPIRequest<SearchResultsContainer>(
+        return await ExecuteAPIRequest<SearchResultsContainer>(
             $"https://{HaloCoreEndpoints.DiscoveryOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/search?start={start}&count={count}&include-times={includeTimes}&sort={sort}&order={order}&assetKind={assetKind}",
             HttpMethod.Get,
             true,
@@ -2053,7 +2053,7 @@ public class HaloInfiniteClient
     /// <returns>An instance of Film containing film metadata if the request is successful. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<Film, HaloApiErrorContainer>> HIUGCDiscoverySpectateByMatchId(string matchId)
     {
-        return await this.ExecuteAPIRequest<Film>(
+        return await ExecuteAPIRequest<Film>(
             $"https://{HaloCoreEndpoints.DiscoveryOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/films/matches/{matchId}/spectate",
             HttpMethod.Get,
             true,
@@ -2072,7 +2072,7 @@ public class HaloInfiniteClient
     /// <returns>A list of Server instances if the request is successful. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<List<Server>, HaloApiErrorContainer>> LobbyGetQosServers()
     {
-        return await this.ExecuteAPIRequest<List<Server>>(
+        return await ExecuteAPIRequest<List<Server>>(
             $"https://{HaloCoreEndpoints.HaloInfiniteLobbyOrigin}.{HaloCoreEndpoints.ServiceDomain}/titles/hi/qosservers",
             HttpMethod.Get,
             true,
@@ -2093,7 +2093,7 @@ public class HaloInfiniteClient
             throw new ArgumentNullException(nameof(presenceRequest));
         }
 
-        return await this.ExecuteAPIRequest<LobbyPresenceContainer>(
+        return await ExecuteAPIRequest<LobbyPresenceContainer>(
             $"https://{HaloCoreEndpoints.HaloInfiniteLobbyOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/presence",
             HttpMethod.Get,
             true,
@@ -2113,7 +2113,7 @@ public class HaloInfiniteClient
     /// <remarks>It seems that this request requires a more "broad access" Spartan token that is generated by the game, and is not open to third-party apps. Additional investigation is required.</remarks>
     public async Task<HaloApiResultContainer<LobbyJoinHandle, HaloApiErrorContainer>> LobbyThirdPartyJoinHandle(string lobbyId, string player, string handleAudience, string handlePlatform)
     {
-        return await this.ExecuteAPIRequest<LobbyJoinHandle>(
+        return await ExecuteAPIRequest<LobbyJoinHandle>(
             $"https://{HaloCoreEndpoints.HaloInfiniteLobbyOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/lobbies/{lobbyId}/players/{player}/thirdPartyJoinHandle?audience={handleAudience}&platform={handlePlatform}",
             HttpMethod.Get,
             true,
@@ -2133,7 +2133,7 @@ public class HaloInfiniteClient
     /// <returns>An instance of FlightedFeatureFlags containing a list of enabled and disabled features if the request is successful. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<FlightedFeatureFlags, HaloApiErrorContainer>> SettingGetFlightedFeatureFlags(string flightId)
     {
-        return await this.ExecuteAPIRequest<FlightedFeatureFlags>(
+        return await ExecuteAPIRequest<FlightedFeatureFlags>(
             $"https://{HaloCoreEndpoints.SettingsOrigin}.{HaloCoreEndpoints.ServiceDomain}/featureflags/hi?flight={flightId}",
             HttpMethod.Get,
             true,
@@ -2155,7 +2155,7 @@ public class HaloInfiniteClient
     /// <returns>An instance of PlayerClearance if the request is successful. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<PlayerClearance, HaloApiErrorContainer>> SettingsGetClearance(string audience, string sandbox, string buildNumber)
     {
-        return await this.ExecuteAPIRequest<PlayerClearance>(
+        return await ExecuteAPIRequest<PlayerClearance>(
             $"https://{HaloCoreEndpoints.SettingsOrigin}.{HaloCoreEndpoints.ServiceDomain}/oban/flight-configurations/titles/hi/audiences/{audience}/active?sandbox={sandbox}&build={buildNumber}",
             HttpMethod.Get,
             true,
@@ -2174,7 +2174,7 @@ public class HaloInfiniteClient
     /// <returns>An instance of PlayerClearance if the request is successful. Otherwise, returns null.</returns>
     public async Task<HaloApiResultContainer<PlayerClearance, HaloApiErrorContainer>> SettingsGetPlayerClearance(string audience, string player, string sandbox, string buildNumber)
     {
-        return await this.ExecuteAPIRequest<PlayerClearance>(
+        return await ExecuteAPIRequest<PlayerClearance>(
             $"https://{HaloCoreEndpoints.SettingsOrigin}.{HaloCoreEndpoints.ServiceDomain}/oban/flight-configurations/titles/hi/audiences/{audience}/players/{player}/active?sandbox={sandbox}&build={buildNumber}",
             HttpMethod.Get,
             true,
@@ -2196,7 +2196,7 @@ public class HaloInfiniteClient
     public async Task<HaloApiResultContainer<PlayerSkillResultContainer, HaloApiErrorContainer>> SkillGetMatchPlayerResult(string matchId, List<string> playerIds)
     {
         var formattedPlayerList = string.Join(",", playerIds);
-        return await this.ExecuteAPIRequest<PlayerSkillResultContainer>(
+        return await ExecuteAPIRequest<PlayerSkillResultContainer>(
             $"https://{HaloCoreEndpoints.SkillOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/matches/{matchId}/skill?players={formattedPlayerList}",
             HttpMethod.Get,
             true,
@@ -2214,7 +2214,7 @@ public class HaloInfiniteClient
     public async Task<HaloApiResultContainer<PlaylistCsrResultContainer, HaloApiErrorContainer>> SkillGetPlaylistCsr(string playlistId, List<string> playerIds)
     {
         var formattedPlayerList = string.Join(",", playerIds);
-        return await this.ExecuteAPIRequest<PlaylistCsrResultContainer>(
+        return await ExecuteAPIRequest<PlaylistCsrResultContainer>(
             $"https://{HaloCoreEndpoints.SkillOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/playlist/{playlistId}/csrs?players={formattedPlayerList}",
             HttpMethod.Get,
             true,
@@ -2236,7 +2236,7 @@ public class HaloInfiniteClient
     public async Task<HaloApiResultContainer<BanSummary, HaloApiErrorContainer>> StatsBanSummary(List<string> targetlist)
     {
         var formattedTargetList = string.Join(",", targetlist);
-        return await this.ExecuteAPIRequest<BanSummary>(
+        return await ExecuteAPIRequest<BanSummary>(
             $"https://{HaloCoreEndpoints.BanProcessorOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/bansummary?auth=st&targets={formattedTargetList}",
             HttpMethod.Get,
             false,
@@ -2252,7 +2252,7 @@ public class HaloInfiniteClient
     /// <returns>An instance of PlayerDecks containing deck information if request was successful. Return value is null otherwise.</returns>
     public async Task<HaloApiResultContainer<PlayerDecks, HaloApiErrorContainer>> StatsGetChallengeDecks(string player)
     {
-        return await this.ExecuteAPIRequest<PlayerDecks>(
+        return await ExecuteAPIRequest<PlayerDecks>(
             $"https://{HaloCoreEndpoints.StatsOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/players/{player}/decks",
             HttpMethod.Get,
             true,
@@ -2268,7 +2268,7 @@ public class HaloInfiniteClient
     /// <returns>An instance of PlayerMatchCount containing match counts if request was successful. Return value is null otherwise.</returns>
     public async Task<HaloApiResultContainer<PlayerMatchCount, HaloApiErrorContainer>> StatsGetMatchCount(string player)
     {
-        return await this.ExecuteAPIRequest<PlayerMatchCount>(
+        return await ExecuteAPIRequest<PlayerMatchCount>(
             $"https://{HaloCoreEndpoints.StatsOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/players/{player}/matches/count",
             HttpMethod.Get,
             true,
@@ -2287,7 +2287,7 @@ public class HaloInfiniteClient
     /// <returns>An instance of MatchContainer containing match metadata if request was successful. Return value is null otherwise.</returns>
     public async Task<HaloApiResultContainer<MatchHistoryResponse, HaloApiErrorContainer>> StatsGetMatchHistory(string player, int start, int count, Models.HaloInfinite.MatchType type)
     {
-        return await this.ExecuteAPIRequest<MatchHistoryResponse>(
+        return await ExecuteAPIRequest<MatchHistoryResponse>(
             $"https://{HaloCoreEndpoints.StatsOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/players/{player}/matches?start={start}&count={count}&type={type}",
             HttpMethod.Get,
             true,
@@ -2303,7 +2303,7 @@ public class HaloInfiniteClient
     /// <returns>An instance of MatchStats containing match metadata if request was successful. Return value is null otherwise.</returns>
     public async Task<HaloApiResultContainer<MatchStats, HaloApiErrorContainer>> StatsGetMatchStats(string matchId)
     {
-        return await this.ExecuteAPIRequest<MatchStats>(
+        return await ExecuteAPIRequest<MatchStats>(
             $"https://{HaloCoreEndpoints.StatsOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/matches/{matchId}/stats",
             HttpMethod.Get,
             true,
@@ -2320,7 +2320,7 @@ public class HaloInfiniteClient
     /// <returns>An instance of MatchProgression containing match challenge progression metadata if request was successful. Return value is null otherwise.</returns>
     public async Task<HaloApiResultContainer<MatchProgression, HaloApiErrorContainer>> StatsGetPlayerMatchProgression(string player, string matchId)
     {
-        return await this.ExecuteAPIRequest<MatchProgression>(
+        return await ExecuteAPIRequest<MatchProgression>(
             $"https://{HaloCoreEndpoints.StatsOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/players/{player}/matches/{matchId}/progression",
             HttpMethod.Get,
             true,
@@ -2336,7 +2336,7 @@ public class HaloInfiniteClient
     /// <returns>An instance of MatchesPrivacy containing match privacy metadata if request was successful. Return value is null otherwise.</returns>
     public async Task<HaloApiResultContainer<MatchesPrivacy, HaloApiErrorContainer>?> StatsMatchPrivacy(string player)
     {
-        return await this.ExecuteAPIRequest<MatchesPrivacy>(
+        return await ExecuteAPIRequest<MatchesPrivacy>(
             $"https://{HaloCoreEndpoints.StatsOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/players/{player}/matches-privacy",
             HttpMethod.Get,
             true,
@@ -2356,7 +2356,7 @@ public class HaloInfiniteClient
     /// <returns>An instance of Key containing a single signing key data if request was successful. Return value is null otherwise.</returns>
     public async Task<HaloApiResultContainer<Key, HaloApiErrorContainer>> TextModerationGetSigningKey(string keyId)
     {
-        return await this.ExecuteAPIRequest<Key>(
+        return await ExecuteAPIRequest<Key>(
             $"https://{HaloCoreEndpoints.TextOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/moderation-proof-keys/{keyId}",
             HttpMethod.Get,
             false,
@@ -2371,7 +2371,7 @@ public class HaloInfiniteClient
     /// <returns>An instance of ModerationProofKeys containing signing key data if request was successful. Return value is null otherwise.</returns>
     public async Task<HaloApiResultContainer<ModerationProofKeys, HaloApiErrorContainer>> TextModerationGetSigningKeys()
     {
-        return await this.ExecuteAPIRequest<ModerationProofKeys>(
+        return await ExecuteAPIRequest<ModerationProofKeys>(
             $"https://{HaloCoreEndpoints.TextOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/moderation-proof-keys",
             HttpMethod.Get,
             false,
@@ -2415,12 +2415,12 @@ public class HaloInfiniteClient
 
         if (useSpartanToken)
         {
-            request.Headers.Add("x-343-authorization-spartan", this.SpartanToken);
+            request.Headers.Add("x-343-authorization-spartan", SpartanToken);
         }
 
         if (useClearance)
         {
-            request.Headers.Add("343-clearance", this.ClearanceToken);
+            request.Headers.Add("343-clearance", ClearanceToken);
         }
 
         request.Headers.Add("User-Agent", userAgent);
@@ -2453,7 +2453,7 @@ public class HaloInfiniteClient
             {
                 if (Attribute.GetCustomAttribute(typeof(T), typeof(IsAutomaticallySerializableAttribute)) != null)
                 {
-                    resultContainer.Result = JsonSerializer.Deserialize<T>(await response.Content.ReadAsStringAsync(), this.serializerOptions);
+                    resultContainer.Result = JsonSerializer.Deserialize<T>(await response.Content.ReadAsStringAsync(), serializerOptions);
                 }
                 else
                 {

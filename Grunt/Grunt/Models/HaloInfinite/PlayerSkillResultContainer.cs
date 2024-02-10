@@ -7,11 +7,10 @@
 
 using System.Collections.Generic;
 
-namespace OpenSpartan.Grunt.Models.HaloInfinite
+namespace Surprenant.Grunt.Models.HaloInfinite;
+
+[IsAutomaticallySerializable]
+public class PlayerSkillResultContainer
 {
-    [IsAutomaticallySerializable]
-    public class PlayerSkillResultContainer
-    {
-        public List<PlayerSkillResult> Value { get; set; }
-    }
+    public List<PlayerSkillResult> Value { get; set; }
 }
