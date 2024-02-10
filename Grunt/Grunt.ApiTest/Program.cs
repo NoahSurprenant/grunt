@@ -1,7 +1,5 @@
-
-using Microsoft.Extensions.Configuration;
-using OpenSpartan.Grunt.Core;
-using OpenSpartan.Grunt.Models;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using OpenSpartan.Grunt.Util;
 
 namespace Grunt.ApiTest;
@@ -13,6 +11,18 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.
+        builder.Services
+            .AddHealthChecksUI(s =>
+            {
+                s.SetEvaluationTimeInSeconds(60);
+                s.SetApiMaxActiveRequests(1);
+                s.MaximumHistoryEntriesPerEndpoint(120);
+                s.AddHealthCheckEndpoint("health-check", "health");
+            })
+            .AddInMemoryStorage()
+            .Services
+            .AddHealthChecks()
+            .AddCheck<InfiniteClientHealthCheck>("InfiniteClientHealthCheck");
 
         builder.Services.AddControllers();
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -36,6 +46,21 @@ public class Program
 
 
         app.MapControllers();
+
+        app.UseRouting()
+            .UseEndpoints(config =>
+            {
+                config.MapHealthChecks("health", new HealthCheckOptions
+                {
+                    Predicate = _ => true,
+                    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+                });
+                config.MapHealthChecksUI(o =>
+                {
+                    o.UseRelativeApiPath = true;
+                });
+                config.MapDefaultControllerRoute();
+            });
 
         app.Run();
     }
