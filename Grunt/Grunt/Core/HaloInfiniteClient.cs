@@ -2380,6 +2380,21 @@ public class HaloInfiniteClient
     }
 
     /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="xuids">Xuids in number format. Do NOT format as XUID(Number)</param>
+    /// <returns></returns>
+    public async Task<HaloApiResultContainer<List<User>, HaloApiErrorContainer>> Users(IEnumerable<string> xuids)
+    {
+        return await ExecuteAPIRequest<List<User>>(
+            $"https://{HaloCoreEndpoints.ProfileOrigin}.{HaloCoreEndpoints.ServiceDomain}/users?xuids={string.Join(",", xuids)}",
+            HttpMethod.Get,
+            true,
+            false,
+            GlobalConstants.HALO_PC_USER_AGENT);
+    }
+
+    /// <summary>
     /// Executes an API request in a standard way against a given API endpoint. This is a helper method that's put
     /// in place to simplify how the API calls are made because most requests against the Halo Infinite API are
     /// pretty repetitive.
@@ -2451,14 +2466,7 @@ public class HaloInfiniteClient
             }
             else
             {
-                if (Attribute.GetCustomAttribute(typeof(T), typeof(IsAutomaticallySerializableAttribute)) != null)
-                {
-                    resultContainer.Result = JsonSerializer.Deserialize<T>(await response.Content.ReadAsStringAsync(), serializerOptions);
-                }
-                else
-                {
-                    throw new NotSupportedException("The specified type is not supported. You can onlty get results in string or byte array formats.");
-                }
+                resultContainer.Result = JsonSerializer.Deserialize<T>(await response.Content.ReadAsStringAsync(), serializerOptions);
             }
         }
 

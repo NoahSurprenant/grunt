@@ -32,6 +32,11 @@ public class AdminController : ControllerBase
         var c = await _haloInfiniteClientFactory.CreateAsync();
 
         var response = await c.StatsGetMatchStats("21416434-4717-4966-9902-af7097469f74");
+
+        var xuids = response.Result.Players.Select(x => x.PlayerId.Replace("xuid(", "").Replace(")", "")).ToList();
+
+        var players = await c.Users(xuids);
+
         return response.Result;
     }
 
