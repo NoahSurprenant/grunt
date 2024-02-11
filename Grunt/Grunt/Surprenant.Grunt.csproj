@@ -14,7 +14,7 @@
 		<PackageTags>halo,halo-api,api,halo-infinite</PackageTags>
 		<PackageIcon>grunt-logo.png</PackageIcon>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-		<Version>1.0.0.0</Version>
+		<Version>0.0.0.1-beta</Version>
 		<Nullable>enable</Nullable>
 		<AnalysisLevel>latest</AnalysisLevel>
 		<PackageId>$(AssemblyName)</PackageId>
