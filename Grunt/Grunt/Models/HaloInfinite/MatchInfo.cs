@@ -15,8 +15,8 @@ namespace Surprenant.Grunt.Models.HaloInfinite;
 [IsAutomaticallySerializable]
 public class MatchInfo
 {
-    public DateTime? StartTime { get; set; }
-    public DateTime? EndTime { get; set; }
+    public DateTimeOffset StartTime { get; set; }
+    public DateTimeOffset EndTime { get; set; }
     public TimeSpan Duration { get; set; }
     public int LifecycleMode { get; set; }
     public GameVariantCategory? GameVariantCategory { get; set; }

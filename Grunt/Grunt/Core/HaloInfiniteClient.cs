@@ -17,6 +17,7 @@ using Surprenant.Grunt.Endpoints;
 using Surprenant.Grunt.Models;
 using Surprenant.Grunt.Models.HaloInfinite;
 using Surprenant.Grunt.Models.HaloInfinite.ApiIngress;
+using Surprenant.Grunt.Models.HaloInfinite.Medals;
 using Surprenant.Grunt.Util;
 
 namespace Surprenant.Grunt.Core;
@@ -880,6 +881,16 @@ public class HaloInfiniteClient
     {
         return await ExecuteAPIRequest<byte[]>(
             $"https://{HaloCoreEndpoints.GameCmsOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/images/file/{filePath}",
+            HttpMethod.Get,
+            true,
+            true,
+            GlobalConstants.HALO_WAYPOINT_USER_AGENT);
+    }
+
+    public async Task<HaloApiResultContainer<byte[], HaloApiErrorContainer>> GameCmsWaypointGetImage(string filePath)
+    {
+        return await ExecuteAPIRequest<byte[]>(
+            $"https://{HaloCoreEndpoints.GameCmsOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/Waypoint/file/{filePath}",
             HttpMethod.Get,
             true,
             true,
@@ -2380,7 +2391,7 @@ public class HaloInfiniteClient
     }
 
     /// <summary>
-    /// 
+    /// Retrieves list of users with their respective gamertags and gamerpictures
     /// </summary>
     /// <param name="xuids">Xuids in number format. Do NOT format as XUID(Number)</param>
     /// <returns></returns>
@@ -2391,6 +2402,21 @@ public class HaloInfiniteClient
             HttpMethod.Get,
             true,
             false,
+            GlobalConstants.HALO_PC_USER_AGENT);
+    }
+
+    /// <summary>
+    /// Retrieves list of users with their respective gamertags and gamerpictures
+    /// </summary>
+    /// <param name="xuids">Xuids in number format. Do NOT format as XUID(Number)</param>
+    /// <returns></returns>
+    public async Task<HaloApiResultContainer<MedalMetadataResponse, HaloApiErrorContainer>> Medals()
+    {
+        return await ExecuteAPIRequest<MedalMetadataResponse>(
+            $"https://{HaloCoreEndpoints.GameCmsOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/Waypoint/file/medals/metadata.json",
+            HttpMethod.Get,
+            true,
+            true,
             GlobalConstants.HALO_PC_USER_AGENT);
     }
 
