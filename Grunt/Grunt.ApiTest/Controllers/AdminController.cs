@@ -1,3 +1,4 @@
+using ImageMagick;
 using Microsoft.AspNetCore.Mvc;
 using Surprenant.Grunt.Core;
 using Surprenant.Grunt.Models.HaloInfinite;
@@ -24,6 +25,34 @@ public class AdminController : ControllerBase
         _haloInfiniteClientFactory = haloInfiniteClientFactory;
         _accountAuthorization = accountAuthorization;
         _stateSeed = stateSeed;
+    }
+
+    [HttpGet(Name = "SaveMedals")]
+    public async Task SaveMedals()
+    {
+        var c = await _haloInfiniteClientFactory.CreateAsync();
+
+        var response = await c.Medals();
+
+        var sheet = await c.GameCmsWaypointGetImage(response.Result.Sprites.ExtraLarge.Path);
+
+        Directory.CreateDirectory("emblems");
+
+        using var image = new MagickImage(sheet.Result);
+
+        var tiles = image.CropToTiles(256, 256);
+
+        //foreach (var (tile, index) in tiles.Select((value, i) => (value, i)))
+        //{
+        //    await tile.WriteAsync($"emblems/{index}.png");
+        //}
+
+        foreach (var medal in response.Result.Medals)
+        {
+            var tile = tiles.ElementAt(medal.SpriteIndex);
+            await tile.WriteAsync($"emblems/{medal.Name.Value}.png");
+        }
+
     }
 
     [HttpGet(Name = "MatchStats")]

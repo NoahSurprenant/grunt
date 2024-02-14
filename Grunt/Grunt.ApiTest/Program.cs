@@ -1,4 +1,5 @@
 using HealthChecks.UI.Client;
+using ImageMagick;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Surprenant.Grunt.Util;
 
@@ -8,6 +9,8 @@ public class Program
 {
     public static void Main(string[] args)
     {
+        MagickNET.Initialize();
+
         var builder = WebApplication.CreateBuilder(args);
 
         // Add services to the container.

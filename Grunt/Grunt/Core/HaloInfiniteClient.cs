@@ -2323,6 +2323,22 @@ public class HaloInfiniteClient
     }
 
     /// <summary>
+    /// Gets stats for a specific match.
+    /// </summary>
+    /// <include file='../APIDocsExamples/Stats_GetMatchStats.xml' path='//example'/>
+    /// <param name="matchId">Match ID in GUID format.</param>
+    /// <returns>An instance of MatchStats containing match metadata if request was successful. Return value is null otherwise.</returns>
+    public async Task<HaloApiResultContainer<MatchStats, HaloApiErrorContainer>> StatsGetMatchStats(Guid matchId)
+    {
+        return await ExecuteAPIRequest<MatchStats>(
+            $"https://{HaloCoreEndpoints.StatsOrigin}.{HaloCoreEndpoints.ServiceDomain}/hi/matches/{matchId}/stats",
+            HttpMethod.Get,
+            true,
+            false,
+            GlobalConstants.HALO_PC_USER_AGENT);
+    }
+
+    /// <summary>
     /// Get challenge progression associated with a given match.
     /// </summary>
     /// <include file='../APIDocsExamples/Stats_GetPlayerMatchProgression.xml' path='//example'/>

@@ -19,6 +19,7 @@ public enum GameVariantCategory
     MultiplayerBastion = 12,
     MultiplayerCtf = 15,
     MultiplayerOddball = 18,
+    MultiplayerInfection = 22,
     MultiplayerGrifball = 25,
     MultiplayerLandGrab = 39,
 }

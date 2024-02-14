@@ -5,6 +5,8 @@
 // The underlying API powering Grunt is managed by 343 Industries and Microsoft. This wrapper is not endorsed by 343 Industries or Microsoft.
 // </copyright>
 
+using System;
+
 namespace Surprenant.Grunt.Models.HaloInfinite;
 
 [IsAutomaticallySerializable]
@@ -21,7 +23,7 @@ public class CoreStats
     public float KDA { get; set; }
     public int Suicides { get; set; }
     public int Betrayals { get; set; }
-    public string AverageLifeDuration { get; set; }
+    public TimeSpan AverageLifeDuration { get; set; }
     public int GrenadeKills { get; set; }
     public int HeadshotKills { get; set; }
     public int MeleeKills { get; set; }

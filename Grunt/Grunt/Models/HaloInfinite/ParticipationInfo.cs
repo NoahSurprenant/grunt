@@ -12,12 +12,12 @@ namespace Surprenant.Grunt.Models.HaloInfinite;
 [IsAutomaticallySerializable]
 public class ParticipationInfo
 {
-    public DateTime FirstJoinedTime { get; set; }
-    public object LastLeaveTime { get; set; }
+    public DateTimeOffset FirstJoinedTime { get; set; }
+    public DateTimeOffset? LastLeaveTime { get; set; }
     public bool PresentAtBeginning { get; set; }
     public bool JoinedInProgress { get; set; }
     public bool LeftInProgress { get; set; }
     public bool PresentAtCompletion { get; set; }
-    public string TimePlayed { get; set; }
-    public object ConfirmedParticipation { get; set; }
+    public TimeSpan TimePlayed { get; set; }
+    public object? ConfirmedParticipation { get; set; }
 }
