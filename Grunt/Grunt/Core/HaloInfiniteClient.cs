@@ -2422,7 +2422,22 @@ public class HaloInfiniteClient
     }
 
     /// <summary>
-    /// Retrieves list of users with their respective gamertags and gamerpictures
+    /// Retrieves a user via gamertag with their respective gamertags and gamerpictures
+    /// </summary>
+    /// <param name="gamertag">The user's gamertag to search for</param>
+    /// <returns></returns>
+    public async Task<HaloApiResultContainer<User, HaloApiErrorContainer>> UserByGamertag(string gamertag)
+    {
+        return await ExecuteAPIRequest<User>(
+            $"https://{HaloCoreEndpoints.ProfileOrigin}.{HaloCoreEndpoints.ServiceDomain}/users/gt({gamertag})",
+            HttpMethod.Get,
+            true,
+            false,
+            GlobalConstants.HALO_PC_USER_AGENT);
+    }
+
+    /// <summary>
+    /// Retrieves medals
     /// </summary>
     /// <param name="xuids">Xuids in number format. Do NOT format as XUID(Number)</param>
     /// <returns></returns>
