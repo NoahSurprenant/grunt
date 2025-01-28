@@ -43,4 +43,6 @@ public class CoreStats
     public PersonalScore[] PersonalScores { get; set; }
     public float DeprecatedDamageDealt { get; set; }
     public float DeprecatedDamageTaken { get; set; }
+    public int Spawns { get; set; }
+    public int ObjectivesCompleted { get; set; }
 }

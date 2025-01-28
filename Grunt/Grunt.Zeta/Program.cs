@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Net.Http;
+using System.Net;
 
 namespace OpenSpartan.Grunt.Zeta;
 
@@ -67,7 +69,11 @@ class Program
         Console.WriteLine("Your Halo token:");
         Console.WriteLine(haloToken.Token);
         
-        HaloInfiniteClient client = new(haloToken.Token, extendedTicket.DisplayClaims.Xui[0].Xid);
+        var handler = new HttpClientHandler()
+        {
+            AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate | DecompressionMethods.Brotli,
+        };
+        HaloInfiniteClient client = new(new(handler), haloToken.Token, extendedTicket.DisplayClaims.Xui[0].Xid);
 
         // Test getting the clearance for local execution.
         string localClearance = string.Empty;

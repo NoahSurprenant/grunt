@@ -50,7 +50,7 @@ class Program
             }
         }
 
-        HaloInfiniteClient client = new(string.Empty, string.Empty);
+        HaloInfiniteClient client = new(new(), string.Empty, string.Empty);
 
         // Get the API endpoint data.
         var resultContainer = await client.GetApiSettingsContainer();
