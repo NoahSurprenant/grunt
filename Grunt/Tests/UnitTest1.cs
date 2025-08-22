@@ -17,7 +17,8 @@ public class Tests
         using var httpClient = new HttpClient();
 
         // Create the client instance through the interface
-        IHaloInfiniteClient client = new HaloInfiniteClient(httpClient, "test-token", "xuid(12345)");
+        var _client = new HaloInfiniteClient(httpClient, "test-token", "xuid(12345)");
+        IHaloInfiniteClient client = _client;
 
         // Verify we can access properties through the interface
         client.SpartanToken = "updated-token";
@@ -34,6 +35,47 @@ public class Tests
 
         // The interface includes all public methods from HaloInfiniteClient
         // This demonstrates that the interface correctly abstracts the implementation
+
+        var classType = _client.GetType();
+        var interfaceType = client.GetType();
+
+        var publicMethods = classType.GetMethods(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance);
+        var interfaceMethods = interfaceType.GetMethods(System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance);
+
+        var missingMethods = publicMethods
+            .Where(m => !interfaceMethods.Any(im =>
+            {
+                if (im.Name != m.Name)
+                {
+                    return false;
+                }
+
+                if (im.ReturnType != m.ReturnType)
+                {
+                    return false;
+                }
+
+                var imParams = im.GetParameters();
+                var mParams = m.GetParameters();
+                if (imParams.Length != mParams.Length)
+                {
+                    return false;
+                }
+
+                for (int i = 0; i < imParams.Length; i++)
+                {
+                    if (imParams[i].Name != mParams[i].Name || imParams[i].ParameterType != mParams[i].ParameterType)
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            }))
+            .ToList();
+
+        if (missingMethods.Count > 0)
+            throw new InvalidOperationException("Missing methods: " + string.Join(", ", missingMethods.Select(x => x.Name)));
 
         Console.WriteLine("Interface test passed! IHaloInfiniteClient correctly exposes all public members of HaloInfiniteClient.");
     }

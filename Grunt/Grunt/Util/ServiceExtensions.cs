@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using Surprenant.Grunt.Core;
+using Surprenant.Grunt.Core.Storage;
 using Surprenant.Grunt.Models;
 using System.Net;
 using System.Net.Http;
@@ -21,9 +22,10 @@ public static class ServiceExtensions
             };
         });
 
+        builder.Services.AddSingleton<IOAuthStorage, OAuthStorage>();
         builder.Services.AddSingleton<IAccountAuthorization, AccountAuthorization>();
         builder.Services.AddSingleton<IStateSeed, StateSeed>();
-        builder.Services.AddSingleton<HaloInfiniteClientFactory>();
+        builder.Services.AddSingleton<IHaloInfiniteClientFactory, HaloInfiniteClientFactory>();
         builder.Services.Configure<ClientConfiguration>(builder.Configuration.GetSection(nameof(ClientConfiguration)));
     }
 }

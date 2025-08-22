@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Surprenant.Grunt.Authentication;
+using Surprenant.Grunt.Core.Storage;
 using Surprenant.Grunt.Models;
 using Surprenant.Grunt.Util;
 using System;
@@ -14,7 +15,7 @@ namespace Surprenant.Grunt.Core;
 /// <summary>
 /// A factory intended to be registered as a singleton.
 /// </summary>
-public class HaloInfiniteClientFactory
+public class HaloInfiniteClientFactory : IHaloInfiniteClientFactory
 {
     private readonly IOptionsMonitor<ClientConfiguration> _options;
     private readonly ILoggerFactory _loggerFactory;
@@ -22,9 +23,10 @@ public class HaloInfiniteClientFactory
     private readonly IConfiguration _configuration;
     private readonly IHttpClientFactory _httpClientFactory;
     private readonly IAccountAuthorization _accountAuthorization;
+    private readonly IOAuthStorage _oAuthStorage;
 
     public HaloInfiniteClientFactory(IOptionsMonitor<ClientConfiguration> optionsMonitor, ILoggerFactory loggerFactory, IConfiguration config,
-        IHttpClientFactory httpClientFactory, IAccountAuthorization accountAuthorization)
+        IHttpClientFactory httpClientFactory, IAccountAuthorization accountAuthorization, IOAuthStorage oAuthStorage)
     {
         _options = optionsMonitor;
         _loggerFactory = loggerFactory;
@@ -32,9 +34,15 @@ public class HaloInfiniteClientFactory
         _configuration = config;
         _httpClientFactory = httpClientFactory;
         _accountAuthorization = accountAuthorization;
+        _oAuthStorage = oAuthStorage;
     }
 
-    public async Task<HaloInfiniteClient> CreateAsync()
+    /// <summary>
+    /// Creates a new instance of the HaloInfiniteClient every time this method is called and ensures it has valid Spartan Token, if it cannot do so then it throws.
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="Exception">Exception thrown when not configured correctly or otherwise unable to create valid spartan token</exception>
+    public async Task<IHaloInfiniteClient> CreateAsync()
     {
         var clientConfig = _options.CurrentValue;
         if (clientConfig is null) throw new Exception("ClientConfiguration is null!");
@@ -46,19 +54,15 @@ public class HaloInfiniteClientFactory
 
         HaloAuthenticationClient haloAuthClient = new();
 
-        OAuthToken currentOAuthToken = null;
+        OAuthToken? currentOAuthToken = null;
 
         var ticket = new XboxTicket();
         var haloTicket = new XboxTicket();
         var extendedTicket = new XboxTicket();
         var haloToken = new SpartanToken();
 
-        if (System.IO.File.Exists("tokens.json"))
-        {
-            _logger.LogDebug("Reading tokens.json");
-            currentOAuthToken = ConfigurationReader.ReadConfiguration<OAuthToken>("tokens.json");
-        }
-        else
+        var token = await _oAuthStorage.GetToken();
+        if (token is null)
         {
             _logger.LogDebug("Requesting new OAuth token");
             currentOAuthToken = await RequestNewToken(manager, clientConfig);
@@ -106,24 +110,8 @@ public class HaloInfiniteClientFactory
             return null;
         }
 
-        _ = StoreTokens(currentOAuthToken, "tokens.json");
+        await _oAuthStorage.SetToken(currentOAuthToken);
 
         return currentOAuthToken;
-    }
-
-    private bool StoreTokens(OAuthToken token, string path)
-    {
-        string json = JsonSerializer.Serialize(token);
-        try
-        {
-            System.IO.File.WriteAllText(path, json);
-            _logger.LogWarning("Stored the tokens locally.");
-            return true;
-        }
-        catch
-        {
-            _logger.LogWarning("There was an issue storing tokens locally. A new token will be requested on the next run.");
-            return false;
-        }
     }
 }
