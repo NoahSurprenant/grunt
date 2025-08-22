@@ -1,6 +1,7 @@
 using ImageMagick;
 using Microsoft.AspNetCore.Mvc;
 using Surprenant.Grunt.Core;
+using Surprenant.Grunt.Core.Storage;
 using Surprenant.Grunt.Models.HaloInfinite;
 using Surprenant.Grunt.Util;
 

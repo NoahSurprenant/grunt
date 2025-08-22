@@ -4,10 +4,8 @@ using Microsoft.Extensions.Options;
 using Surprenant.Grunt.Authentication;
 using Surprenant.Grunt.Core.Storage;
 using Surprenant.Grunt.Models;
-using Surprenant.Grunt.Util;
 using System;
 using System.Net.Http;
-using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Surprenant.Grunt.Core;
@@ -38,7 +36,7 @@ public class HaloInfiniteClientFactory : IHaloInfiniteClientFactory
     }
 
     /// <summary>
-    /// Creates a new instance of the HaloInfiniteClient every time this method is called and ensures it has valid Spartan Token, if it cannot do so then it throws.
+    /// Creates a new instance of the <see cref="IHaloInfiniteClient"/> every time this method is called and ensures it has valid Spartan Token, if it cannot do so then it throws.
     /// </summary>
     /// <returns></returns>
     /// <exception cref="Exception">Exception thrown when not configured correctly or otherwise unable to create valid spartan token</exception>
