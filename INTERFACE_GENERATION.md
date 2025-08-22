@@ -1,14 +1,15 @@
 # Interface Generation for HaloInfiniteClient
 
-This document explains how the `IHaloInfiniteClient` interface is automatically generated from the `HaloInfiniteClient` class.
+This document explains how the `IHaloInfiniteClient` interface is automatically generated from the `HaloInfiniteClient` class using a C# Source Generator.
 
 ## Overview
 
-The `IHaloInfiniteClient` interface is automatically generated to include all public methods and properties from the `HaloInfiniteClient` class. This ensures that:
+The `IHaloInfiniteClient` interface is automatically generated using a proper C# Source Generator that implements the `IIncrementalGenerator` interface. This ensures that:
 
 1. The interface always stays in sync with the class implementation
-2. Any changes to public methods are automatically reflected in the interface
+2. Any changes to public methods are automatically reflected in the interface during compilation
 3. The interface provides a clean abstraction for dependency injection and testing
+4. No manual regeneration is required - the interface is generated at compile time
 
 ## How it Works
 
@@ -26,14 +27,15 @@ public class HaloInfiniteClient : IHaloInfiniteClient
 
 This attribute indicates that an interface should be generated for this class.
 
-### Automatic Generation
+### C# Source Generator
 
-The interface is generated using the `Tools/InterfaceGenerator.cs` utility, which:
+The interface is generated using a proper C# Source Generator (`Grunt.SourceGenerator`) that:
 
-1. Parses the `HaloInfiniteClient.cs` file
-2. Extracts all public properties and methods
-3. Generates the corresponding interface declarations
-4. Creates the `IHaloInfiniteClient.cs` file
+1. Implements `IIncrementalGenerator` with the `[Generator]` attribute
+2. Automatically detects classes marked with `[GenerateInterface]` during compilation
+3. Extracts all public properties and methods
+4. Generates the corresponding interface declarations at compile time
+5. Creates the `IHaloInfiniteClient.generated.cs` file in memory during build
 
 ### Generated Interface Structure
 
@@ -53,38 +55,29 @@ public interface IHaloInfiniteClient
     
     Task<HaloApiResultContainer<ApiSettingsContainer, HaloApiErrorContainer>> GetApiSettingsContainer();
     Task<HaloApiResultContainer<BotCustomizationData, HaloApiErrorContainer>> AcademyGetBotCustomization(string flightId);
-    // ... all other public methods
+    // ... all other public methods including generic methods
 }
 ```
 
-## Regenerating the Interface
+## Compilation-Time Generation
 
-When you add, modify, or remove public methods from `HaloInfiniteClient`, you need to regenerate the interface:
-
-### Using the Script
-
-Run the regeneration script from the repository root:
+The source generator runs automatically during each build:
 
 ```bash
-./regenerate-interface.sh
+dotnet build
 ```
 
-### Manual Regeneration
-
-If you prefer to regenerate manually:
-
-1. Navigate to a temporary directory
-2. Create a new console application: `dotnet new console`
-3. Copy `Tools/InterfaceGenerator.cs` to `Program.cs`
-4. Run: `dotnet run`
+The interface is generated in memory during compilation and does not create physical files in the source directory. This follows the standard pattern for C# Source Generators.
 
 ## Benefits
 
-1. **Consistency**: The interface is always consistent with the class
-2. **Maintainability**: No need to manually update interface when methods change
-3. **Type Safety**: Compile-time verification that the class implements all interface members
-4. **Testing**: Easy to create mock implementations for unit testing
-5. **Dependency Injection**: Clean interface for IoC container registration
+1. **Automatic**: No manual intervention required - runs during every build
+2. **Consistency**: The interface is always consistent with the class
+3. **Maintainability**: No need to manually update interface when methods change
+4. **Type Safety**: Compile-time verification that the class implements all interface members
+5. **Testing**: Easy to create mock implementations for unit testing
+6. **Dependency Injection**: Clean interface for IoC container registration
+7. **Industry Standard**: Uses proper C# Source Generator infrastructure
 
 ## Usage Example
 
@@ -112,13 +105,20 @@ public class MyService
 
 ## Files
 
-- `Grunt/Grunt/Core/IHaloInfiniteClient.cs` - The generated interface (auto-generated, do not edit manually)
 - `Grunt/Grunt/Core/HaloInfiniteClient.cs` - The implementation class (marked with `[GenerateInterface]`)
 - `Grunt/Grunt/Attributes/GenerateInterfaceAttribute.cs` - The attribute used to mark classes for interface generation
-- `Tools/InterfaceGenerator.cs` - The utility that generates the interface
-- `regenerate-interface.sh` - Script to regenerate the interface
-- `Grunt/Grunt/Tests/HaloInfiniteClientInterfaceTest.cs` - Test demonstrating interface usage
+- `Grunt/Grunt.SourceGenerator/` - The C# Source Generator project with `IIncrementalGenerator` implementation
+- Generated `IHaloInfiniteClient.generated.cs` - The auto-generated interface (exists in memory during compilation)
+
+## Technical Details
+
+The source generator:
+- Uses `IIncrementalGenerator` for optimal performance
+- Marked with `[Generator]` attribute for proper registration
+- Targets `netstandard2.0` for maximum compatibility
+- Automatically handles most method signatures including async methods
+- Generates interfaces with proper using statements and namespaces
 
 ## Note
 
-The generated interface file (`IHaloInfiniteClient.cs`) should not be edited manually as it will be overwritten when the interface is regenerated. All changes should be made to the `HaloInfiniteClient` class instead.
+The generated interface file exists only in memory during compilation and is not written to disk. This follows the standard pattern for C# Source Generators. All changes should be made to the `HaloInfiniteClient` class, and the interface will be automatically regenerated during the next build.
