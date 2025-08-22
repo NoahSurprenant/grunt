@@ -12,6 +12,7 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Surprenant.Grunt.Attributes;
 using Surprenant.Grunt.Converters;
 using Surprenant.Grunt.Endpoints;
 using Surprenant.Grunt.Models;
@@ -25,7 +26,8 @@ namespace Surprenant.Grunt.Core;
 /// <summary>
 /// Client used to access the Halo Infinite API surface.
 /// </summary>
-public class HaloInfiniteClient
+[GenerateInterface]
+public class HaloInfiniteClient : IHaloInfiniteClient
 {
     private readonly JsonSerializerOptions serializerOptions = new()
     {
