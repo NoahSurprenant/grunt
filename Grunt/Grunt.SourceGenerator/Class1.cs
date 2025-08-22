@@ -116,7 +116,10 @@ public class InterfaceGenerator : IIncrementalGenerator
 
         foreach (var property in publicProperties)
         {
-            var propertyType = GetFullyQualifiedTypeName(property.Type);
+            var propertyType = property.Type.ToDisplayString(new SymbolDisplayFormat(
+                typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameAndContainingTypesAndNamespaces,
+                genericsOptions: SymbolDisplayGenericsOptions.IncludeTypeParameters,
+                miscellaneousOptions: SymbolDisplayMiscellaneousOptions.UseSpecialTypes));
             var accessors = new System.Collections.Generic.List<string>();
             
             if (property.GetMethod?.DeclaredAccessibility == Accessibility.Public)
@@ -150,9 +153,9 @@ public class InterfaceGenerator : IIncrementalGenerator
 
         foreach (var method in publicMethods)
         {
-            var returnType = GetFullyQualifiedTypeName(method.ReturnType);
+            var returnType = FormatTypeForInterface(method.ReturnType, method);
             var parameters = string.Join(", ", method.Parameters.Select(p => 
-                $"{GetFullyQualifiedTypeName(p.Type)} {p.Name}"));
+                $"{FormatTypeForInterface(p.Type, method)} {p.Name}"));
 
             // Handle generic methods
             var genericParameters = "";
@@ -169,14 +172,29 @@ public class InterfaceGenerator : IIncrementalGenerator
         return sb.ToString();
     }
 
-    private static string GetFullyQualifiedTypeName(ITypeSymbol type)
+    private static string FormatTypeForInterface(ITypeSymbol type, IMethodSymbol method)
     {
-        // For type parameters, just return the name
-        if (type.TypeKind == TypeKind.TypeParameter)
+        // For type parameters that belong to the method, just use the name
+        if (type.TypeKind == TypeKind.TypeParameter && 
+            method.TypeParameters.Any(tp => tp.Name == type.Name))
         {
             return type.Name;
         }
+        
+        // For generic types that contain method type parameters, use special handling
+        if (type is INamedTypeSymbol namedType && namedType.TypeArguments.Length > 0)
+        {
+            var typeName = namedType.ConstructedFrom.ToDisplayString(new SymbolDisplayFormat(
+                typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameAndContainingTypesAndNamespaces));
+            
+            var typeArgs = namedType.TypeArguments.Select(arg => FormatTypeForInterface(arg, method));
+            return $"{typeName}<{string.Join(", ", typeArgs)}>";
+        }
 
-        return type.ToDisplayString(SymbolDisplayFormat.FullyQualifiedFormat);
+        // For other types, use standard formatting
+        return type.ToDisplayString(new SymbolDisplayFormat(
+            typeQualificationStyle: SymbolDisplayTypeQualificationStyle.NameAndContainingTypesAndNamespaces,
+            genericsOptions: SymbolDisplayGenericsOptions.IncludeTypeParameters,
+            miscellaneousOptions: SymbolDisplayMiscellaneousOptions.UseSpecialTypes));
     }
 }

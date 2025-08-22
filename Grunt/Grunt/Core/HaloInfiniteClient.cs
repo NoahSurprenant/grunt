@@ -27,7 +27,7 @@ namespace Surprenant.Grunt.Core;
 /// Client used to access the Halo Infinite API surface.
 /// </summary>
 [GenerateInterface]
-public class HaloInfiniteClient
+public class HaloInfiniteClient : IHaloInfiniteClient
 {
     private readonly JsonSerializerOptions serializerOptions = new()
     {
