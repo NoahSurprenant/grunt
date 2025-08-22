@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace Surprenant.Grunt.Core;
 
 /// <summary>
-/// A factory intended to be registered as a singleton.
+/// Implementation of <see cref="IHaloInfiniteClientFactory"/> that creates instances of <see cref="IHaloInfiniteClient"/>.
 /// </summary>
 public class HaloInfiniteClientFactory : IHaloInfiniteClientFactory
 {
@@ -23,6 +23,9 @@ public class HaloInfiniteClientFactory : IHaloInfiniteClientFactory
     private readonly IAccountAuthorization _accountAuthorization;
     private readonly IOAuthStorage _oAuthStorage;
 
+    /// <summary>
+    /// Creates a new instance of <see cref="HaloInfiniteClientFactory"/>.
+    /// </summary>
     public HaloInfiniteClientFactory(IOptionsMonitor<ClientConfiguration> optionsMonitor, ILoggerFactory loggerFactory, IConfiguration config,
         IHttpClientFactory httpClientFactory, IAccountAuthorization accountAuthorization, IOAuthStorage oAuthStorage)
     {
@@ -35,11 +38,7 @@ public class HaloInfiniteClientFactory : IHaloInfiniteClientFactory
         _oAuthStorage = oAuthStorage;
     }
 
-    /// <summary>
-    /// Creates a new instance of the <see cref="IHaloInfiniteClient"/> every time this method is called and ensures it has valid Spartan Token, if it cannot do so then it throws.
-    /// </summary>
-    /// <returns></returns>
-    /// <exception cref="Exception">Exception thrown when not configured correctly or otherwise unable to create valid spartan token</exception>
+    /// <inheritdoc/> 
     public async Task<IHaloInfiniteClient> CreateAsync()
     {
         var clientConfig = _options.CurrentValue;
@@ -52,15 +51,14 @@ public class HaloInfiniteClientFactory : IHaloInfiniteClientFactory
 
         HaloAuthenticationClient haloAuthClient = new();
 
-        OAuthToken? currentOAuthToken = null;
+        OAuthToken? currentOAuthToken = await _oAuthStorage.GetToken();
 
         var ticket = new XboxTicket();
         var haloTicket = new XboxTicket();
         var extendedTicket = new XboxTicket();
         var haloToken = new SpartanToken();
 
-        var token = await _oAuthStorage.GetToken();
-        if (token is null)
+        if (currentOAuthToken is null)
         {
             _logger.LogDebug("Requesting new OAuth token");
             currentOAuthToken = await RequestNewToken(manager, clientConfig);
@@ -81,14 +79,18 @@ public class HaloInfiniteClientFactory : IHaloInfiniteClientFactory
                 _logger.LogInformation("Could not get the token even with the refresh token.");
                 currentOAuthToken = await RequestNewToken(manager, clientConfig);
             }
-            ticket = await manager.RequestUserToken(currentOAuthToken.AccessToken);
+            ticket = await manager.RequestUserToken(currentOAuthToken.AccessToken)
+                ?? throw new InvalidOperationException("Failed to get user token.");
         }
+       
+        haloTicket = await manager.RequestXstsToken(ticket.Token)
+            ?? throw new InvalidOperationException("Failed to get halo ticket.");
 
-        haloTicket = await manager.RequestXstsToken(ticket.Token);
+        extendedTicket = await manager.RequestXstsToken(ticket.Token, false)
+            ?? throw new InvalidOperationException("Failed to get extended ticket.");
 
-        extendedTicket = await manager.RequestXstsToken(ticket.Token, false);
-
-        haloToken = await haloAuthClient.GetSpartanToken(haloTicket.Token);
+        haloToken = await haloAuthClient.GetSpartanToken(haloTicket.Token)
+            ?? throw new InvalidOperationException("Failed to get halo token.");
 
         _logger.LogDebug("Your Halo token: {HaloToken}", haloToken.Token);
 
