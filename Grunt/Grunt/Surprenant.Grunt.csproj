@@ -52,4 +52,12 @@
 	    <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	  </PackageReference>
 	</ItemGroup>
+
+	<ItemGroup>
+	  <Analyzer Include="../Grunt.SourceGenerator/bin/$(Configuration)/netstandard2.0/Grunt.SourceGenerator.dll" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="../Grunt.SourceGenerator/Grunt.SourceGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+	</ItemGroup>
 </Project>

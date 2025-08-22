@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Grunt.Librarian", "Grunt.Li
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Grunt.ApiTest", "Grunt.ApiTest\Grunt.ApiTest.csproj", "{97378CB8-B743-472B-9CD5-007B95B6A80C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Grunt.SourceGenerator", "Grunt.SourceGenerator\Grunt.SourceGenerator.csproj", "{7FFCCEAF-0145-4E5C-B385-462B80B7253F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{97378CB8-B743-472B-9CD5-007B95B6A80C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97378CB8-B743-472B-9CD5-007B95B6A80C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97378CB8-B743-472B-9CD5-007B95B6A80C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FFCCEAF-0145-4E5C-B385-462B80B7253F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FFCCEAF-0145-4E5C-B385-462B80B7253F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FFCCEAF-0145-4E5C-B385-462B80B7253F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FFCCEAF-0145-4E5C-B385-462B80B7253F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
