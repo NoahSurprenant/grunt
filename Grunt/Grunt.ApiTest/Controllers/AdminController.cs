@@ -16,11 +16,11 @@ public class AdminController : ControllerBase
     };
 
     private readonly ILogger<AdminController> _logger;
-    private readonly HaloInfiniteClientFactory _haloInfiniteClientFactory;
+    private readonly IHaloInfiniteClientFactory _haloInfiniteClientFactory;
     private readonly IStateSeed _stateSeed;
     private readonly IAccountAuthorization _accountAuthorization;
 
-    public AdminController(ILogger<AdminController> logger, HaloInfiniteClientFactory haloInfiniteClientFactory, IAccountAuthorization accountAuthorization, IStateSeed stateSeed)
+    public AdminController(ILogger<AdminController> logger, IHaloInfiniteClientFactory haloInfiniteClientFactory, IAccountAuthorization accountAuthorization, IStateSeed stateSeed)
     {
         _logger = logger;
         _haloInfiniteClientFactory = haloInfiniteClientFactory;

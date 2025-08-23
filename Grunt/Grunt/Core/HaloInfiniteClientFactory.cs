@@ -94,7 +94,7 @@ public class HaloInfiniteClientFactory : IHaloInfiniteClientFactory
 
         _logger.LogDebug("Your Halo token: {HaloToken}", haloToken.Token);
 
-        return new HaloInfiniteClient(_httpClientFactory.CreateClient(nameof(HaloInfiniteClient)), haloToken.Token, extendedTicket.DisplayClaims.Xui[0].Xid);
+        return new HaloInfiniteClient(_httpClientFactory.CreateClient(nameof(IHaloInfiniteClient)), haloToken.Token, extendedTicket.DisplayClaims.Xui[0].Xid);
     }
 
     private async Task<OAuthToken> RequestNewToken(XboxAuthenticationClient manager, ClientConfiguration clientConfig)
