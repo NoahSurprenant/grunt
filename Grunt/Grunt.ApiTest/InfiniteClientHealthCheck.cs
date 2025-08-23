@@ -5,8 +5,8 @@ namespace Grunt.ApiTest;
 
 public class InfiniteClientHealthCheck : IHealthCheck
 {
-    private readonly HaloInfiniteClientFactory _clientFactory;
-    public InfiniteClientHealthCheck(HaloInfiniteClientFactory haloInfiniteClientFactory)
+    private readonly IHaloInfiniteClientFactory _clientFactory;
+    public InfiniteClientHealthCheck(IHaloInfiniteClientFactory haloInfiniteClientFactory)
     {
         _clientFactory = haloInfiniteClientFactory;
     }
