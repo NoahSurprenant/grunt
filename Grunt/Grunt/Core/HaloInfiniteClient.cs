@@ -2520,8 +2520,8 @@ public class HaloInfiniteClient : IHaloInfiniteClient
             else if (typeof(T) == typeof(byte[]))
             {
                 using MemoryStream dataStream = new();
-                using var steam = await response.Content!.ReadAsStreamAsync();
-                await steam.CopyToAsync(dataStream);
+                using var stream = await response.Content!.ReadAsStreamAsync();
+                await stream.CopyToAsync(dataStream);
                 resultContainer.Result = (T)Convert.ChangeType(dataStream.ToArray(), typeof(T));
             }
             else if (typeof(T) == typeof(bool))
