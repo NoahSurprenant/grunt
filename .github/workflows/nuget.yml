@@ -31,6 +31,6 @@ jobs:
       run: dotnet pack Grunt --configuration Release /p:PackageVersion=${{ github.event.inputs.version }}
       
     - name: Push
-      run: dotnet nuget push Grunt/bin/Release/NuGet.Workflow.${{ github.event.inputs.version }}.nupkg --source https://api.nuget.org/v3/index.json --api-key $NUGET_API_KEY
+      run: dotnet nuget push Grunt/bin/Release/Surprenant.Grunt.${{ github.event.inputs.version }}.nupkg --source https://api.nuget.org/v3/index.json --api-key $NUGET_API_KEY
       env:
         NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
