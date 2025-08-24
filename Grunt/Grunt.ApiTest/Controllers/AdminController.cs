@@ -70,6 +70,14 @@ public class AdminController : ControllerBase
         return response.Result;
     }
 
+    [HttpGet(Name = "MatchStatsAlt")]
+    public async Task<MatchStats> GetAlt()
+    {
+        var response = await _haloInfiniteClientFactory.StatsGetMatchStats("21416434-4717-4966-9902-af7097469f74");
+
+        return response.Result;
+    }
+
     [HttpGet(Name = "SetCode")]
     public async Task<ActionResult> SetCode([FromQuery] string code, [FromQuery] string state)
     {

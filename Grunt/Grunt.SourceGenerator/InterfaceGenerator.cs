@@ -138,7 +138,7 @@ public class InterfaceGenerator : IIncrementalGenerator
             sb.AppendLine($"    {{");
             sb.AppendLine($"        var client = await GetOrCreateClient().ConfigureAwait(false);");
             sb.AppendLine($"        var response = await client.{methodName}{genericInvocation}({args}).ConfigureAwait(false);");
-            sb.AppendLine($"        if (response.Error.Code == 401 || response.Error.Code == 405)");
+            sb.AppendLine($"        if (response.Error.Code == 401 || response.Error.Code == 403)");
             sb.AppendLine($"        {{");
             sb.AppendLine($"            _logger.LogWarning(\"Detected auth issue, going to retry request\");");
             sb.AppendLine($"            client = await GetOrCreateClient(true).ConfigureAwait(false);");
