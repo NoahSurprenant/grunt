@@ -2,14 +2,14 @@
 using Microsoft.Extensions.Options;
 using Surprenant.Grunt.Endpoints;
 using Surprenant.Grunt.Models;
+using Surprenant.Grunt.Util;
 using System;
 using System.Collections.Specialized;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Surprenant.Grunt.Util;
-
+namespace Surprenant.Grunt.Core.Storage;
 public interface IAccountAuthorization
 {
     /// <summary>
@@ -26,7 +26,7 @@ public interface IAccountAuthorization
     Task SetCodeAsync(string code);
 }
 
-internal class AccountAuthorization : IAccountAuthorization
+public class AccountAuthorization : IAccountAuthorization
 {
     public AccountAuthorization(ILogger<AccountAuthorization> logger, IStateSeed stateSeed, IOptionsMonitor<ClientConfiguration> optionsMonitor)
     {

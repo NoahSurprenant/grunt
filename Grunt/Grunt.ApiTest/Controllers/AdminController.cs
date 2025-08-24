@@ -1,6 +1,7 @@
 using ImageMagick;
 using Microsoft.AspNetCore.Mvc;
 using Surprenant.Grunt.Core;
+using Surprenant.Grunt.Core.Storage;
 using Surprenant.Grunt.Models.HaloInfinite;
 using Surprenant.Grunt.Util;
 
@@ -15,11 +16,11 @@ public class AdminController : ControllerBase
     };
 
     private readonly ILogger<AdminController> _logger;
-    private readonly HaloInfiniteClientFactory _haloInfiniteClientFactory;
+    private readonly IHaloInfiniteClientFactory _haloInfiniteClientFactory;
     private readonly IStateSeed _stateSeed;
     private readonly IAccountAuthorization _accountAuthorization;
 
-    public AdminController(ILogger<AdminController> logger, HaloInfiniteClientFactory haloInfiniteClientFactory, IAccountAuthorization accountAuthorization, IStateSeed stateSeed)
+    public AdminController(ILogger<AdminController> logger, IHaloInfiniteClientFactory haloInfiniteClientFactory, IAccountAuthorization accountAuthorization, IStateSeed stateSeed)
     {
         _logger = logger;
         _haloInfiniteClientFactory = haloInfiniteClientFactory;
@@ -65,6 +66,14 @@ public class AdminController : ControllerBase
         var xuids = response.Result.Players.Select(x => x.PlayerId.Replace("xuid(", "").Replace(")", "")).ToList();
 
         var players = await c.Users(xuids);
+
+        return response.Result;
+    }
+
+    [HttpGet(Name = "MatchStatsAlt")]
+    public async Task<MatchStats> GetAlt()
+    {
+        var response = await _haloInfiniteClientFactory.StatsGetMatchStats("21416434-4717-4966-9902-af7097469f74");
 
         return response.Result;
     }

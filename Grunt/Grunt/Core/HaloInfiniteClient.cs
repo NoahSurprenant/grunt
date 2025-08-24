@@ -12,6 +12,7 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Surprenant.Grunt.Attributes;
 using Surprenant.Grunt.Converters;
 using Surprenant.Grunt.Endpoints;
 using Surprenant.Grunt.Models;
@@ -25,7 +26,8 @@ namespace Surprenant.Grunt.Core;
 /// <summary>
 /// Client used to access the Halo Infinite API surface.
 /// </summary>
-public class HaloInfiniteClient
+[GenerateInterface]
+public class HaloInfiniteClient : IHaloInfiniteClient
 {
     private readonly JsonSerializerOptions serializerOptions = new()
     {
@@ -2502,20 +2504,25 @@ public class HaloInfiniteClient
         var response = await _httpClient.SendAsync(request);
 
         resultContainer.Error.Code = Convert.ToInt32(response.StatusCode);
+        string? responseContent = null;
+        if (response.Content != null)
+        {
+            responseContent = await response.Content.ReadAsStringAsync();
+            resultContainer.Error.Message = responseContent;
+        }
 
-        if (response.IsSuccessStatusCode)
+        if (response.IsSuccessStatusCode && responseContent is not null)
         {
             if (typeof(T) == typeof(string))
             {
-                resultContainer.Result = (T)Convert.ChangeType(await response.Content.ReadAsStringAsync(), typeof(T));
+                resultContainer.Result = (T)Convert.ChangeType(responseContent, typeof(T));
             }
             else if (typeof(T) == typeof(byte[]))
             {
-                using (MemoryStream dataStream = new())
-                {
-                    response.Content.ReadAsStreamAsync().Result.CopyTo(dataStream);
-                    resultContainer.Result = (T)Convert.ChangeType(dataStream.ToArray(), typeof(T));
-                }
+                using MemoryStream dataStream = new();
+                using var stream = await response.Content!.ReadAsStreamAsync();
+                await stream.CopyToAsync(dataStream);
+                resultContainer.Result = (T)Convert.ChangeType(dataStream.ToArray(), typeof(T));
             }
             else if (typeof(T) == typeof(bool))
             {
@@ -2523,13 +2530,8 @@ public class HaloInfiniteClient
             }
             else
             {
-                resultContainer.Result = JsonSerializer.Deserialize<T>(await response.Content.ReadAsStringAsync(), serializerOptions);
+                resultContainer.Result = JsonSerializer.Deserialize<T>(responseContent, serializerOptions);
             }
-        }
-
-        if (response.Content != null)
-        {
-            resultContainer.Error.Message = await response.Content.ReadAsStringAsync();
         }
 
         return resultContainer;
