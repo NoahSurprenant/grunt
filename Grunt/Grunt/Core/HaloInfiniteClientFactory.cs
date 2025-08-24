@@ -189,9 +189,9 @@ public partial class HaloInfiniteClientFactory : IHaloInfiniteClientFactory
         }
         finally
         {
-            _logger.LogTrace("Releasing sepaphore lock in GetOrCreateClient");
+            _logger.LogTrace("Releasing semaphore lock in GetOrCreateClient");
             semaphoreSlim.Release();
-            _logger.LogTrace("Just released sepaphore lock in GetOrCreateClient");
+            _logger.LogTrace("Just released semaphore lock in GetOrCreateClient");
         }
     }
 
